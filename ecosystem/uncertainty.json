@@ -1,0 +1,22 @@
+{
+  "schema_version": "klipot.uncertainty.v1",
+  "repository": "bboroski/NUNLauncher",
+  "items": [
+    {
+      "id": "NUNLauncher.product-modes",
+      "domain": "boot-and-android",
+      "statement": "Kernel bootstrap and Android home-screen launcher are separate execution domains and cannot share a privileged boot path.",
+      "feature": "Isolated build profiles plus image validation and versioned handoff preparation",
+      "resolution_mode": "explicit-config",
+      "unknown_behavior": "Never treat an Android application as a bootloader or claim CPU handoff before an architecture-specific entry implementation exists.",
+      "verification": [
+        "Kernel profile validates image size, load range and architecture.",
+        "Handoff data is independently validated before copying.",
+        "Android profile remains separately identified and specification-only.",
+        "No CPU jump is claimed by the host contract API."
+      ],
+      "implementation_status": "implemented",
+      "status": "open"
+    }
+  ]
+}

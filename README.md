@@ -55,3 +55,7 @@ NUNLauncher не керує пам'яттю ядра після передачі
 
 - [Project-specific architecture mapping](docs/REAPER_DOMAIN_INTEGRATION.md)
 - [Canonical 50-pattern catalogue in SAMBU](https://github.com/bboroski/SAMBU/blob/main/data/reaper/engineering_patterns_50.tsv)
+
+## Reaper cycle boot preflight
+
+[Image validation contract](docs/REAPER_BOOT_PREFLIGHT.md) — architecture, ABI, memory-map, entry-point, digest, and signature gates for future boot artifacts.

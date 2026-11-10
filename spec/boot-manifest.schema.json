@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nunlauncher:boot-manifest:1",
+  "title": "NUNLauncher Boot Manifest",
+  "description": "Declarative boot-image and handoff metadata. Schema validation does not execute or authenticate an image.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "image",
+    "target_abi",
+    "memory_map",
+    "required_capabilities",
+    "verification_policy"
+  ],
+  "properties": {
+    "manifest_version": {
+      "const": 1
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "format",
+        "size_bytes",
+        "digest",
+        "entry_point"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "format": {
+          "enum": [
+            "elf",
+            "pe",
+            "raw",
+            "multiboot",
+            "other"
+          ]
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "entry_point": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "target_abi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "major",
+        "minor",
+        "endianness",
+        "word_bits"
+      ],
+      "properties": {
+        "family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "major": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endianness": {
+          "enum": [
+            "little",
+            "big"
+          ]
+        },
+        "word_bits": {
+          "enum": [
+            16,
+            32,
+            64,
+            128
+          ]
+        }
+      }
+    },
+    "memory_map": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "base",
+          "length",
+          "purpose"
+        ],
+        "properties": {
+          "base": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "purpose": {
+            "enum": [
+              "usable-ram",
+              "reserved",
+              "firmware",
+              "mmio",
+              "framebuffer",
+              "handoff",
+              "kernel-image"
+            ]
+          },
+          "permissions": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "read",
+                "write",
+                "execute"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "required_capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "build_id": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        }
+      }
+    },
+    "verification_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "digest_required",
+        "signature_required"
+      ],
+      "properties": {
+        "digest_required": {
+          "const": true
+        },
+        "signature_required": {
+          "type": "boolean"
+        },
+        "signature": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "key_id",
+            "value"
+          ],
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "key_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

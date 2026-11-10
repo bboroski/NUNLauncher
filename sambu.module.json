@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "ecosystem": "SAMBU",
+  "module_id": "nunlauncher-android-home",
+  "repository": "bboroski/NUNLauncher",
+  "display_name": "NUNLauncher",
+  "version": "0.1.0",
+  "role": "android-home-launcher",
+  "runtime": ["Android API 26+", "Kotlin", "Jetpack Compose", "LauncherApps API"],
+  "maturity": "android-home-foundation",
+  "provides": ["android.home.launcher.v1", "android.launcherapps.catalog.v1", "android.launcherapps.search.v1", "android.launcherapps.dispatch.v1", "nun.duck-ui.android.v1"],
+  "consumes": ["android.launcherapps.api"],
+  "dependencies": [
+    {"module_id":"nun-os-kernel","relation":"optional-adapter","status":"planned","scope":"future authenticated, versioned NUN management bridge; not present in current build"}
+  ],
+  "boundaries": [
+    "NUNLauncher is a standard Android application and cannot replace the Android kernel or PC firmware boot chain.",
+    "Application discovery is limited to launchable activity metadata.",
+    "No private app data, credentials or account material is collected.",
+    "No root escalation, arbitrary command execution or remote code loading.",
+    "The NUN bridge remains unimplemented and must not display a false connected state.",
+    "QUERY_ALL_PACKAGES is restricted and requires platform-policy justification for store distribution."
+  ],
+  "verification": {
+    "host_tests": "Gradle Android debug build is configured; build execution remains pending.",
+    "target_validation": "Android emulator/device HOME-role selection and package-visibility review are pending.",
+    "evidence": ["HOME intent filter declared", "LauncherApps API used for discovery and dispatch", "RU/UK/EN string resources and vector launcher mark added"]
+  }
+}

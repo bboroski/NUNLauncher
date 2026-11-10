@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_name">NUN</string>
+    <string name="brand_subtitle">СИСТЕМНАЯ ОБОЛОЧКА · ЛОКАЛЬНОЕ УПРАВЛЕНИЕ</string>
+    <string name="refresh_apps">Обновить список приложений</string>
+    <string name="open_settings">Открыть настройки Android</string>
+    <string name="settings_unavailable">Не удалось открыть настройки</string>
+    <string name="search_apps">Поиск приложений</string>
+    <string name="local_device">ЛОКАЛЬНОЕ УСТРОЙСТВО</string>
+    <string name="launcher_ready">Домашняя оболочка активна</string>
+    <string name="local_only">НА УСТРОЙСТВЕ</string>
+    <string name="applications">Приложения</string>
+    <string name="loading_apps">Индексация доступных приложений…</string>
+    <string name="no_apps">Запускаемые приложения не найдены</string>
+    <string name="no_search_results">Совпадений не найдено</string>
+    <string name="app_unavailable">Приложение больше недоступно</string>
+    <string name="launch_failed">Не удалось запустить приложение</string>
+</resources>

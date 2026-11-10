@@ -1,33 +1,40 @@
-# KBS — Kernel Bootstrap Supervisor
+# NUNLauncher — Android home environment
 
-**A specification scaffold for controlled system-kernel startup.**
+**NUNLauncher is the Android home-screen application for the NUN ecosystem.** The canonical repository name remains NUNLauncher. It is not a PC bootloader and cannot replace the Android kernel.
 
-Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. KBS defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate MKS.
+<sub>Implemented foundation: HOME activity, launcher-app discovery/search/launch and a black/yellow Compose UI. A privileged NUN management bridge remains a future contract.</sub>
 
-[Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Repository](https://github.com/bboroski/NUNLauncher)
+## Foundation features
 
-## Purpose
+- Android HOME role through MAIN + HOME + DEFAULT intent categories.
+- App catalogue using Android LauncherApps.
+- Local search across installed launchable activities.
+- Refresh and launch actions.
+- Android settings shortcut.
+- RU/UK/EN UI resources.
+- Duck black/yellow design tokens and vector app mark.
+- Local-only; no account, telemetry, remote execution or background network access.
 
-A future bootstrap supervisor should:
-- validate the kernel-image format and version;
-- validate the memory map, alignment, and permitted address ranges;
-- verify required platform capabilities;
-- construct a versioned boot-information block;
-- transfer control through a defined architecture entry point;
-- record failures before handoff instead of silently falling back to an unknown mode.
+## Build
 
-## Kernel contract
+Requirements: Android Studio/JDK 17+, Android SDK Platform 37 and Gradle 9.6.0.
 
-KBS should not duplicate the kernel memory manager, scheduler, or device drivers. Its scope is image validation, boot-information construction, and controlled handoff. The kernel must validate the received context before initialization.
+~~~bash
+gradle :app:assembleDebug
+~~~
 
-## Current verification status
+APK output: app/build/outputs/apk/debug/app-debug.apk.
 
-There is no implementation, build, or test suite yet. No bootable binary or verified architecture support exists.
+Install on a test device and select NUNLauncher as the default Home app in Android settings. The previous Home app can be restored through system settings.
 
-## Technical identity
+## Android API model
 
-**KBS** is the canonical name of the planned bootstrap supervisor. The GitHub address is retained for link compatibility.
+The app catalogue uses LauncherApps and launches items through startMainActivity. It does not inspect private app data, alter packages or silently change system settings.
 
-## Status
+QUERY_ALL_PACKAGES is declared because global launcher-app discovery is a core launcher function. Google Play distribution remains subject to package-visibility policy review.
 
-Do not use this repository as a bootloader: no launcher or bootloader implementation exists yet.
+## NUN connection
+
+The future NUN system bridge is a separate versioned interface. This Android application does not gain root, firmware or kernel privileges by being named NUNLauncher. No NUN RPC implementation is present in this foundation; the UI must not fake a connected state.
+
+Read [architecture](docs/ARCHITECTURE.md), [bridge contract](docs/NUN_BRIDGE.md) and [Duck UI](docs/DUCK_UI.md).

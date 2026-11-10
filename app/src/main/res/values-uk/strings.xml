@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_name">NUN</string>
+    <string name="brand_subtitle">СИСТЕМНА ОБОЛОНКА · ЛОКАЛЬНЕ КЕРУВАННЯ</string>
+    <string name="refresh_apps">Оновити список програм</string>
+    <string name="open_settings">Відкрити налаштування Android</string>
+    <string name="settings_unavailable">Не вдалося відкрити налаштування</string>
+    <string name="search_apps">Пошук програм</string>
+    <string name="local_device">ЛОКАЛЬНИЙ ПРИСТРІЙ</string>
+    <string name="launcher_ready">Домашня оболонка активна</string>
+    <string name="local_only">НА ПРИСТРОЇ</string>
+    <string name="applications">Програми</string>
+    <string name="loading_apps">Індексація доступних програм…</string>
+    <string name="no_apps">Програми для запуску не знайдено</string>
+    <string name="no_search_results">Збігів не знайдено</string>
+    <string name="app_unavailable">Програма більше недоступна</string>
+    <string name="launch_failed">Не вдалося запустити програму</string>
+</resources>

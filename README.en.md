@@ -1,8 +1,8 @@
-# KBS — Kernel Bootstrap Supervisor
+# NUNLauncher — Kernel Bootstrap Supervisor
 
 **A specification scaffold for controlled system-kernel startup.**
 
-Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. KBS defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate MKS.
+Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. NUNLauncher defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate MKS.
 
 [Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Repository](https://github.com/bboroski/NUNLauncher)
 
@@ -18,7 +18,7 @@ A future bootstrap supervisor should:
 
 ## Kernel contract
 
-KBS should not duplicate the kernel memory manager, scheduler, or device drivers. Its scope is image validation, boot-information construction, and controlled handoff. The kernel must validate the received context before initialization.
+NUNLauncher should not duplicate the kernel memory manager, scheduler, or device drivers. Its scope is image validation, boot-information construction, and controlled handoff. The kernel must validate the received context before initialization.
 
 ## Current verification status
 
@@ -26,7 +26,7 @@ There is no implementation, build, or test suite yet. No bootable binary or veri
 
 ## Technical identity
 
-**KBS** is the canonical name of the planned bootstrap supervisor. The GitHub address is retained for link compatibility.
+**NUNLauncher** is the canonical name of the planned bootstrap supervisor. The GitHub address is retained for link compatibility.
 
 ## Status
 

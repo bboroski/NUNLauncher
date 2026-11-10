@@ -1,57 +1,62 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
 <h1 align="center">NUNLauncher</h1>
-<p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
+<p align="center"><strong>Duck Black/Yellow · Android Home Application</strong></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-ANDROID%20APP%20FOUNDATION-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/PLATFORM-ANDROID%2026%2B-FFD600?style=for-the-badge&labelColor=111111" /></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 <hr />
 
-**Специфікаційний каркас для контрольованого запуску ядра та передачі перевіреного контексту.**
+**NUNLauncher — Android Home Launcher і користувацька оболонка екосистеми NUN.**
 
-## Продуктова роль
+## Призначення
 
-NUNLauncher описує майбутню вузьку межу між firmware/bootloader і мінімальним ядром NUN. Завдання шару — перевірити вхідні дані та передати керування передбачуваним способом, не дублюючи внутрішні підсистеми ядра.
+NUNLauncher — звичайний Android-додаток, який користувач може вибрати як Home за замовчуванням. Він показує доступні Android-застосунки, дозволяє шукати й запускати їх, а згодом отримає системні панелі та інтеграцію з NUN OS.
 
-## Передбачені обов'язки
+Це **не** UEFI-завантажувач, fastboot/recovery, root-інструмент або механізм прошивки. Звичайний Android-додаток не може самостійно замінити boot chain чи записувати захищені розділи.
 
-- Перевірка формату й версії kernel image.
-- Валідація memory map, alignment і допустимих діапазонів адрес.
-- Перевірка необхідних platform capabilities.
-- Формування версійованого boot-information block.
-- Передача керування через визначений architecture entry point.
-- Фіксація помилки до handoff без прихованого fallback у невідомий режим.
+## Що вже реалізовано в основі застосунку
 
-## Контракт із ядром
+- Android Gradle project: Java 17, SDK 26+, Gradle 9.9.0 та Android Gradle Plugin 9.4.1.
+- HOME/DEFAULT і LAUNCHER intent filters.
+- Локальне виявлення Activity з категорією LAUNCHER.
+- Пошук за назвою застосунку та package name.
+- Запуск вибраного застосунку через явний ComponentName.
+- Кнопка переходу до Android Settings.
+- Duck Black/Yellow palette, графітові панелі та жовті акценти.
+- Unit-тести локальної фільтрації та GitHub Actions workflow для збирання APK.
 
-NUNLauncher не повинен дублювати kernel memory manager, scheduler чи device drivers. Він відповідає за валідацію образу, формування handoff-даних і контроль переходу. [NUN](https://github.com/bboroski/NUN) має самостійно перевірити отриманий контекст перед ініціалізацією.
+Список пакетів обмежений видимістю Android launcher-активностей. Дозволи `QUERY_ALL_PACKAGES`, root, firmware-write і мережеві дозволи не запитуються.
 
-## Поточний стан
+## Швидкий запуск
 
-**Current status: SPECIFICATION ONLY**
+Потрібні JDK 17, Android SDK Platform 36 і Gradle 9.9.0:
 
-У репозиторії поки немає launcher-коду, bootloader, конфігурації образу, build pipeline або тестів. Тут немає bootable binary чи перевіреної підтримки архітектур. Це специфікаційний каркас, а не готовий завантажувач.
+```bash
+gradle :app:testDebugUnitTest :app:assembleDebug
+```
 
-## Управління розробкою та readiness gates
+Debug APK після успішної збірки з’явиться тут:
 
-| Етап | Необхідний доказ |
-|---|---|
-| Image contract | Формат, версія, checksum і правила сумісності визначені |
-| Memory validation | Boundary, alignment та address-range тести проходять |
-| Capability gate | Невідповідна платформа відхиляється до handoff |
-| Boot information | Структура handoff версіонована й перевіряється ядром |
-| Handoff | Архітектурний entry point перевірений в емуляторі та на цільовій платформі |
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
 
-До появи коду не заявляється підтримка жодної архітектури як перевірена. Помилка до handoff має бути явною; невідомий режим не повинен запускатися приховано.
+Збірку й запуск на фізичному пристрої ще мають підтвердити CI та device smoke tests. Доданий workflow запускає JVM unit tests і збирає debug APK.
 
-## Межі відповідальності
+## Архітектурні межі
 
-NUNLauncher не керує пам'яттю ядра після передачі керування, не планує задачі та не реалізує драйвери. Після handoff відповідальність переходить до NUN.
+- **NUN OS** — самостійна bare-metal ОС, ядро й системний ABI.
+- **NUNLauncher** — Android Home-додаток.
+- **NUN System Bridge** — майбутній обмежений Binder-клієнт для NUN Android distribution; наразі це контракт, а не робочий системний сервіс.
 
-## Екосистема
+NUNLauncher має залишатися повноцінним Android Home і без NUN-служби. За відсутності bridge системні NUN-функції мають показувати стан «недоступно», а не імітувати системний доступ.
 
-[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN).
+## Наступні напрями
 
+Адаптивні робочі простори, dock, папки, віджети, швидкі налаштування, доступність, клавіатурна/D-pad-навігація та безпечна інтеграція з NUN-сервісами додаватимуться окремими етапами з тестами.
 
-## Reaper-inspired engineering integration
+## Документація
 
-- [Project-specific architecture mapping](docs/REAPER_DOMAIN_INTEGRATION.md)
-- [Canonical 50-pattern catalogue in SAMBU](https://github.com/bboroski/SAMBU/blob/main/data/reaper/engineering_patterns_50.tsv)
+- [Android Home architecture](docs/ANDROID_HOME_ARCHITECTURE.md)
+- [NUN system bridge contract](docs/NUN_SYSTEM_BRIDGE.md)
+- [Duck UI system](docs/DUCK_UI_SYSTEM.md)
+- [NUN OS repository](https://github.com/bboroski/NUN)

@@ -49,3 +49,9 @@ NUNLauncher не керує пам'яттю ядра після передачі
 ## Екосистема
 
 [SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN).
+
+
+## Reaper-inspired engineering integration
+
+- [Project-specific architecture mapping](docs/REAPER_DOMAIN_INTEGRATION.md)
+- [Canonical 50-pattern catalogue in SAMBU](https://github.com/bboroski/SAMBU/blob/main/data/reaper/engineering_patterns_50.tsv)

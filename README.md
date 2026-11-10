@@ -26,7 +26,7 @@ NUNLauncher не повинен дублювати kernel memory manager, schedu
 
 ## Поточний стан
 
-<badge>SPECIFICATION ONLY</badge>
+**Current status: SPECIFICATION ONLY**
 
 У репозиторії поки немає launcher-коду, bootloader, конфігурації образу, build pipeline або тестів. Тут немає bootable binary чи перевіреної підтримки архітектур. Це специфікаційний каркас, а не готовий завантажувач.
 

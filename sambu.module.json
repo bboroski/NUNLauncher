@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "ecosystem": "SAMBU",
-  "module_id": "nun-launcher",
+  "module_id": "nunlauncher-bootstrap",
   "repository": "bboroski/NUNLauncher",
   "display_name": "NUNLauncher",
   "version": null,

@@ -55,3 +55,8 @@ NUNLauncher не керує пам'яттю ядра після передачі
 
 - [Project-specific architecture mapping](docs/REAPER_DOMAIN_INTEGRATION.md)
 - [Canonical 50-pattern catalogue in SAMBU](https://github.com/bboroski/SAMBU/blob/main/data/reaper/engineering_patterns_50.tsv)
+
+
+## Application UI preview
+
+Open `ui/index.html` for the NUNLauncher Aura mobile design. It interprets the abstract sketch through its own product-specific information architecture and colour system. It is a visual prototype, not a kernel runtime or native Android APK.

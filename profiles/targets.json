@@ -1,0 +1,27 @@
+{
+  "schema_version": "nunlauncher.targets.v1",
+  "selected_profile": null,
+  "profiles": [
+    {
+      "id": "kernel-bootstrap",
+      "build_target": "nunlauncher_boot_contract",
+      "privilege_domain": "pre-kernel",
+      "status": "host-contract-implemented",
+      "entry_transfer": "not-implemented",
+      "requires_explicit_architecture": true
+    },
+    {
+      "id": "android-home-shell",
+      "build_target": null,
+      "privilege_domain": "android-application",
+      "status": "specification-only",
+      "entry_transfer": "not-applicable",
+      "requires_explicit_architecture": false
+    }
+  ],
+  "policy": {
+    "profiles_are_isolated": true,
+    "android_shell_is_not_a_bootloader": true,
+    "metadata_validation_is_not_a_hardware_support_claim": true
+  }
+}

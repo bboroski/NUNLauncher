@@ -20,3 +20,7 @@ A 64-bit payload does not mean every target is x86-64. x86-64, AArch64, RISC-V, 
 ## Status
 
 NUNLauncher currently contains specifications, not a bootloader. These checks describe acceptance criteria and must not be read as implemented validation or a bootable binary.
+
+## NUN image-contract dependency
+
+NUNLauncher consumes the proposed NUN capability ID `kernel.image.contract.specification.v1`, defined in [NUN Kernel Image Contract v1](https://github.com/bboroski/NUN/blob/main/docs/architecture/kernel-image-contract-v1.md). This is a documentation-level dependency only: neither repository currently implements an image parser, loader, signature verifier, or boot handoff runtime.

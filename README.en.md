@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-C11%20CONTRACT-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-HOST%20METADATA%20SLICE-FFD600?style=for-the-badge&labelColor=111111" /></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 <hr />
 
@@ -26,9 +26,9 @@ NUNLauncher must not duplicate the kernel memory manager, scheduler, or device d
 
 ## Current status
 
-**Current status: SPECIFICATION ONLY**
+**Current status: host-side image and handoff metadata contract added; no actual boot transfer yet.**
 
-The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. There is no bootable binary or verified architecture support. This is a specification scaffold, not a working loader.
+The C11 API validates magic/version, structure size, selected architecture, image range, entry offset, memory map, and consistency between the image descriptor and handoff block. CMake and host tests are provided (python one.py check). nunlauncher_handoff_prepare prepares a validated metadata copy; it does not perform a CPU jump, switch privilege levels, or create a bootable binary. The Android home-screen profile is separate and remains specification-only.
 
 ## Project management and readiness gates
 
@@ -40,7 +40,7 @@ The repository does not yet contain launcher code, a bootloader, image configura
 | Boot information | Handoff structure is versioned and validated by the kernel |
 | Handoff | Architecture entry point is verified in an emulator and on target hardware |
 
-No architecture is claimed as supported until implementation and validation exist. Pre-handoff failures must be explicit; an unknown mode must never start silently.
+A metadata architecture ID is not a support claim. A real handoff still needs an architecture-specific assembly entry, platform startup code, linker integration, emulator smoke tests, and target qualification. Pre-transfer failures remain explicit.
 
 ## Responsibility boundaries
 

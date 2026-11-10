@@ -1,51 +1,50 @@
-<p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
+<p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
-<hr />
 
-**A specification scaffold for controlled kernel startup and transfer of a validated execution context.**
+---
 
-## Product position
+**NUNLauncher defines the future narrow boundary between firmware/bootloader and the NUN minimal kernel.** Its responsibility is to validate an image, prepare boot context, and transfer control through a defined entry point.
 
-NUNLauncher defines the future narrow boundary between firmware/bootloader and the NUN minimal kernel. Its role is to validate incoming data and transfer control predictably without duplicating kernel subsystems.
+## Intended functions
 
-## Intended responsibilities
-
-- Validate the kernel image format and version.
-- Validate the memory map, alignment, and permitted address ranges.
+- Validate kernel-image format and version.
+- Validate memory map, alignment, and permitted address ranges.
 - Check required platform capabilities.
 - Build a versioned boot-information block.
-- Transfer control through a defined architecture entry point.
-- Record failures before handoff without silently falling back to an unknown mode.
-
-## Contract with the kernel
-
-NUNLauncher must not duplicate the kernel memory manager, scheduler, or device drivers. It is responsible for image validation, handoff-data construction, and transition control. [NUN](https://github.com/bboroski/NUN) must independently validate the received context before initialization.
+- Transfer control through an architecture entry point.
+- Report pre-handoff failures explicitly instead of silently entering an unknown mode.
 
 ## Current status
 
-**Current status: SPECIFICATION ONLY**
+<badge>SPECIFICATION ONLY</badge>
 
-The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. There is no bootable binary or verified architecture support. This is a specification scaffold, not a working loader.
+The repository currently contains no launcher code, bootloader, image configuration, build pipeline, tests, or bootable binary. No architecture is verified as supported. Elbrus/E2K remains an architecture workstream, not a qualified target.
 
-## Project management and readiness gates
+## NUN contract
 
-| Stage | Required evidence |
+[NUN](https://github.com/bboroski/NUN) must independently validate the handoff context before initialization. NUNLauncher is responsible only for image validation, boot-information construction, and controlled transfer. Memory management, scheduling, and drivers belong to the kernel.
+
+## Implementation plan
+
+| Stage | Readiness evidence |
 |---|---|
-| Image contract | Format, version, checksum, and compatibility rules are defined |
+| Image contract | Format, version, checksum, and compatibility are defined |
 | Memory validation | Boundary, alignment, and address-range tests pass |
 | Capability gate | An incompatible platform is rejected before handoff |
-| Boot information | Handoff structure is versioned and validated by the kernel |
-| Handoff | Architecture entry point is verified in an emulator and on target hardware |
+| Boot information | Handoff structure is versioned and checked by the kernel |
+| Handoff | Entry point is verified in an emulator and on target hardware |
 
-No architecture is claimed as supported until implementation and validation exist. Pre-handoff failures must be explicit; an unknown mode must never start silently.
+Pre-handoff failures must be explicit. An unknown mode must never be entered silently. Host tests do not prove a real boot on a CPU or board.
 
-## Responsibility boundaries
+## Ecosystem and license
 
-NUNLauncher does not manage kernel memory after the transfer, schedule tasks, or implement drivers. Responsibility passes to NUN after handoff.
+Related kernel project: [NUN](https://github.com/bboroski/NUN). Engineering ecosystem components: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI), and [Klipot](https://github.com/bboroski/Klipot).
 
-## Ecosystem
+No <code>LICENSE</code> file is present; no license is declared. Define the terms before public distribution.
 
-[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN).
+---
+
+**Built with love for systems engineering and people.**

@@ -2,7 +2,7 @@
 
 **A specification scaffold for controlled system-kernel startup.**
 
-Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. NUNLauncher defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate MKS.
+Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. NUNLauncher defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate NUN.
 
 [Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Repository](https://github.com/bboroski/NUNLauncher)
 

@@ -49,3 +49,8 @@ NUNLauncher не керує пам'яттю ядра після передачі
 ## Екосистема
 
 [SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN).
+
+
+## Verified AI-assisted engineering
+
+This repository's model-assisted review boundary and acceptance rules are documented in [AI boot handoff policy](docs/AI_BOOT_HANDOFF_POLICY.md). AI output remains advisory until independently validated.

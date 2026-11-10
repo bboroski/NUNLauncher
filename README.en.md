@@ -26,7 +26,7 @@ NUNLauncher must not duplicate the kernel memory manager, scheduler, or device d
 
 ## Current status
 
-<badge>SPECIFICATION ONLY</badge>
+**Current status: SPECIFICATION ONLY**
 
 The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. There is no bootable binary or verified architecture support. This is a specification scaffold, not a working loader.
 

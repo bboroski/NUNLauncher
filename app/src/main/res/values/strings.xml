@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NUNLauncher</string>
+    <string name="home_subtitle">ANDROID HOME · LOCAL MODE</string>
+    <string name="search_hint">Search installed apps</string>
+    <string name="empty_apps">No matching applications</string>
+    <string name="settings_button">ANDROID SETTINGS</string>
+    <string name="app_tile_description">%1$s application</string>
+</resources>

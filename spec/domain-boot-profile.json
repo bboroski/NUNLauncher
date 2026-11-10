@@ -1,0 +1,43 @@
+{
+  "schema_version": "nun.boot-domain-profile.v1",
+  "profile_id": "nunlauncher.reference-domain-boot",
+  "profile_status": "example-only",
+  "architecture": "unverified",
+  "abi": {
+    "family": "nun-handoff",
+    "major": 1,
+    "minor": 0
+  },
+  "artifact": {
+    "format": "elf",
+    "size_bytes": 65536,
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "integrity_status": "placeholder"
+  },
+  "entry_point": 1052672,
+  "memory_regions": [
+    {
+      "name": "kernel-image",
+      "start": 1048576,
+      "size": 1048576,
+      "alignment": 4096,
+      "kind": "kernel",
+      "permissions": ["read", "execute"]
+    },
+    {
+      "name": "boot-info",
+      "start": 2097152,
+      "size": 65536,
+      "alignment": 4096,
+      "kind": "handoff",
+      "permissions": ["read", "write"]
+    }
+  ],
+  "required_capabilities": ["nun.boot-handoff.v1"],
+  "recovery": {
+    "rollback_enabled": true,
+    "max_attempts": 3,
+    "retry_delay_ms": 1000,
+    "fallback_order": ["last-known-good"]
+  }
+}

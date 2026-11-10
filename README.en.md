@@ -31,3 +31,10 @@ There is no implementation, build, or test suite yet. No bootable binary or veri
 ## Status
 
 Do not use this repository as a bootloader: no launcher or bootloader implementation exists yet.
+
+## Academic biology glossary
+
+- [500 academic terms EN–RU](data/biology/academic_terms_500.tsv)
+- [Data contract and usage boundaries](docs/BIOLOGY_DOMAIN_PACK.md)
+
+An offline reference pack for education and metadata; it does not control systems, devices or diagnostics.

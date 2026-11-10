@@ -201,5 +201,35 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verification_policy": {
+            "properties": {
+              "signature_required": {
+                "const": true
+              }
+            },
+            "required": [
+              "signature_required"
+            ]
+          }
+        },
+        "required": [
+          "verification_policy"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verification_policy": {
+            "required": [
+              "signature"
+            ]
+          }
+        }
+      }
+    }
+  ]
 }

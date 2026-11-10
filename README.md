@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-C11%20CONTRACT-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-HOST%20METADATA%20SLICE-FFD600?style=for-the-badge&labelColor=111111" /></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 <hr />
 
@@ -26,9 +26,9 @@ NUNLauncher не повинен дублювати kernel memory manager, schedu
 
 ## Поточний стан
 
-**Current status: SPECIFICATION ONLY**
+**Поточний стан: додано host-контракт перевірки образу та handoff-метаданих; фактичного завантаження поки немає.**
 
-У репозиторії поки немає launcher-коду, bootloader, конфігурації образу, build pipeline або тестів. Тут немає bootable binary чи перевіреної підтримки архітектур. Це специфікаційний каркас, а не готовий завантажувач.
+C11 API перевіряє magic/version, розмір структури, вибрану архітектуру, діапазон образу, entry offset, карту пам'яті та відповідність образу handoff-блоку. Є CMake і host-тести (python one.py check). nunlauncher_handoff_prepare готує перевірену копію метаданих, але не виконує CPU jump, не перемикає privilege mode і не створює bootable binary. Android home-screen profile відокремлений і залишається специфікацією.
 
 ## Управління розробкою та readiness gates
 
@@ -40,7 +40,7 @@ NUNLauncher не повинен дублювати kernel memory manager, schedu
 | Boot information | Структура handoff версіонована й перевіряється ядром |
 | Handoff | Архітектурний entry point перевірений в емуляторі та на цільовій платформі |
 
-До появи коду не заявляється підтримка жодної архітектури як перевірена. Помилка до handoff має бути явною; невідомий режим не повинен запускатися приховано.
+ID архітектури в метаданных не подтверждает её поддержку. Для настоящего handoff нужны architecture-specific assembly entry, platform startup, linker integration, emulator smoke tests и target qualification. Ошибка до передачи управления остаётся явной.
 
 ## Межі відповідальності
 

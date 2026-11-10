@@ -31,3 +31,10 @@ NUNLauncher не повинен дублювати kernel memory manager, schedu
 ## Статус
 
 Не використовувати як завантажувач: реалізованого bootloader/launcher тут ще немає.
+
+
+## UI foundation
+
+The repository includes a standalone, mobile-first NUNLauncher preview in `ui/`. Open `ui/index.html` in a modern browser. The mobile experience uses its own midnight indigo, lavender, atmospheric cyan and soft coral palette with an app library and quick-control surfaces. It is deliberately distinct from the NUN engineering desktop.
+
+This remains a web UI prototype, not a native Android APK or bootloader. Shortcut previews and quick-control switches do not launch installed apps or change actual device settings.

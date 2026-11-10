@@ -1,9 +1,18 @@
-<p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
+<p align="center"><img src="assets/amber-obsidian-mark.svg" alt="Duck mark" width="104" /></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
 <p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 <hr />
+
+## Візуальна система · Amber–Obsidian v2
+
+Індивідуальна графічна мова **NUNLauncher**: обсидіановий фон, графітові поверхні та власний бурштиновий акцент. Візуальні маркери стану відокремлюють готові, невідомі й ще не реалізовані можливості.
+
+<p align="center"><img src="assets/amber-obsidian-preview.svg" alt="NUNLauncher interface concept preview" width="100%"></p>
+
+[Специфікація інтерфейсу та меж реалізації](docs/INTERFACE_DESIGN.md).
+
 
 **Специфікаційний каркас для контрольованого запуску ядра та передачі перевіреного контексту.**
 

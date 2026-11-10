@@ -1,40 +1,51 @@
-# NUNLauncher — Kernel Bootstrap Supervisor
+<p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
+<h1 align="center">NUNLauncher</h1>
+<p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
+<p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
+<hr />
 
-**A specification scaffold for controlled system-kernel startup.**
+**A specification scaffold for controlled kernel startup and transfer of a validated execution context.**
 
-Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. NUNLauncher defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate NUN.
+## Product position
 
-[Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Repository](https://github.com/bboroski/NUNLauncher)
+NUNLauncher defines the future narrow boundary between firmware/bootloader and the NUN minimal kernel. Its role is to validate incoming data and transfer control predictably without duplicating kernel subsystems.
 
-## Purpose
+## Intended responsibilities
 
-A future bootstrap supervisor should:
-- validate the kernel-image format and version;
-- validate the memory map, alignment, and permitted address ranges;
-- verify required platform capabilities;
-- construct a versioned boot-information block;
-- transfer control through a defined architecture entry point;
-- record failures before handoff instead of silently falling back to an unknown mode.
+- Validate the kernel image format and version.
+- Validate the memory map, alignment, and permitted address ranges.
+- Check required platform capabilities.
+- Build a versioned boot-information block.
+- Transfer control through a defined architecture entry point.
+- Record failures before handoff without silently falling back to an unknown mode.
 
-## Kernel contract
+## Contract with the kernel
 
-NUNLauncher should not duplicate the kernel memory manager, scheduler, or device drivers. Its scope is image validation, boot-information construction, and controlled handoff. The kernel must validate the received context before initialization.
+NUNLauncher must not duplicate the kernel memory manager, scheduler, or device drivers. It is responsible for image validation, handoff-data construction, and transition control. [NUN](https://github.com/bboroski/NUN) must independently validate the received context before initialization.
 
-## Current verification status
+## Current status
 
-There is no implementation, build, or test suite yet. No bootable binary or verified architecture support exists.
+<badge>SPECIFICATION ONLY</badge>
 
-## Technical identity
+The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. There is no bootable binary or verified architecture support. This is a specification scaffold, not a working loader.
 
-**NUNLauncher** is the canonical name of the planned bootstrap supervisor. The GitHub address is retained for link compatibility.
+## Project management and readiness gates
 
-## Status
+| Stage | Required evidence |
+|---|---|
+| Image contract | Format, version, checksum, and compatibility rules are defined |
+| Memory validation | Boundary, alignment, and address-range tests pass |
+| Capability gate | An incompatible platform is rejected before handoff |
+| Boot information | Handoff structure is versioned and validated by the kernel |
+| Handoff | Architecture entry point is verified in an emulator and on target hardware |
 
-Do not use this repository as a bootloader: no launcher or bootloader implementation exists yet.
+No architecture is claimed as supported until implementation and validation exist. Pre-handoff failures must be explicit; an unknown mode must never start silently.
 
-## Academic biology glossary
+## Responsibility boundaries
 
-- [500 academic terms EN–RU](data/biology/academic_terms_500.tsv)
-- [Data contract and usage boundaries](docs/BIOLOGY_DOMAIN_PACK.md)
+NUNLauncher does not manage kernel memory after the transfer, schedule tasks, or implement drivers. Responsibility passes to NUN after handoff.
 
-An offline reference pack for education and metadata; it does not control systems, devices or diagnostics.
+## Ecosystem
+
+[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN).

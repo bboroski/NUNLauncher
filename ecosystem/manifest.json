@@ -1,0 +1,42 @@
+{
+  "project_id": "NUNLauncher",
+  "schema_version": 1,
+  "contract_major": 1,
+  "role": "android-home-launcher-and-nun-user-shell",
+  "maturity": "android-app-foundation",
+  "platform": {
+    "os": "Android",
+    "min_sdk": 26,
+    "compile_sdk": 36,
+    "target_sdk": 36,
+    "language": "Java 17",
+    "build_system": "Gradle",
+    "android_gradle_plugin": "9.4.1",
+    "gradle": "9.9.0"
+  },
+  "provides": [
+    "android-home-default-activity",
+    "launcher-activity-catalog",
+    "local-app-search",
+    "duck-black-yellow-home-ui"
+  ],
+  "planned": [
+    "adaptive-workspaces",
+    "folders-and-dock",
+    "optional-widgets",
+    "permissioned-nun-binder-client"
+  ],
+  "consumes": [
+    "android-package-manager-launcher-intents",
+    "duck-ui-design-tokens",
+    "future-versioned-nun-system-bridge"
+  ],
+  "safety": [
+    "No QUERY_ALL_PACKAGES permission",
+    "No root or bootloader permissions",
+    "No firmware or partition writes",
+    "No broad background device management",
+    "No network telemetry in the base launcher",
+    "NUN-specific controls remain unavailable without an authenticated NUN system service"
+  ]
+}

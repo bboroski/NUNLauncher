@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Duck mark" width="104" /></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111" /></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-C11%20CONTRACT-FFD600?style=for-the-badge&labelColor=111111" /><img src="https://img.shields.io/badge/IMPLEMENTATION-HOST%20METADATA%20SLICE-FFD600?style=for-the-badge&labelColor=111111" /></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 <hr />
 
@@ -26,9 +26,9 @@ NUNLauncher не должен дублировать kernel memory manager, sche
 
 ## Текущий статус
 
-**Current status: SPECIFICATION ONLY**
+**Текущий статус: добавлен host-контракт проверки образа и handoff-метаданных; фактической загрузки пока нет.**
 
-В репозитории пока нет кода launcher, bootloader, конфигурации образа, build pipeline или тестов. Здесь нет bootable binary или проверенной поддержки архитектур. Это спецификационный каркас, а не работающий загрузчик.
+C11 API проверяет magic/version, размер структуры, выбранную архитектуру, диапазон образа, entry offset, карту памяти и согласованность дескриптора образа с handoff-блоком. Добавлены CMake и host-тесты (python one.py check). nunlauncher_handoff_prepare готовит проверенную копию метаданных, но не выполняет CPU jump, не переключает privilege mode и не создаёт bootable binary. Android home-screen profile отделён и остаётся спецификацией.
 
 ## Управление проектом и readiness gates
 
@@ -40,7 +40,7 @@ NUNLauncher не должен дублировать kernel memory manager, sche
 | Boot information | Handoff-структура версионируется и проверяется ядром |
 | Handoff | Architecture entry point проверен в эмуляторе и на целевом устройстве |
 
-До реализации и проверки ни одна архитектура не заявляется как поддерживаемая. Ошибки до handoff должны быть явными; неизвестный режим не должен запускаться скрыто.
+ID архитектуры в метаданных не подтверждает её поддержку. Для настоящего handoff нужны architecture-specific assembly entry, platform startup, linker integration, тесты в эмуляторе и квалификация целевой платформы.
 
 ## Границы ответственности
 

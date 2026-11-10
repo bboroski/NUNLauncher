@@ -2,7 +2,7 @@
   "schema_version": 1,
   "ecosystem": "SAMBU",
   "repository": "bboroski/NUNLauncher",
-  "module_id": "nun-launcher",
+  "module_id": "nunlauncher-bootstrap",
   "layers": [
     "bootstrap-supervisor-specification",
     "boot-validation",

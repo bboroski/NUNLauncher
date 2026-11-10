@@ -1,33 +1,34 @@
-# NUNLauncher — Kernel Bootstrap Supervisor
+# NUN Launcher — Android-интерфейс для NUN
 
-**Спецификационный каркас для контролируемого запуска системного ядра.**
+NUN Launcher — настоящее Android-приложение категории HOME: чёрно-жёлтый интерфейс, анимированные плитки, поиск приложений, системная панель и native bridge к runtime NUN.
 
-Текущий статус: **только заготовка документации**. В репозитории пока нет кода launcher, bootloader, конфигурации образа, build pipeline или тестов. NUNLauncher задаёт предполагаемый узкий контракт между firmware/bootloader и минимальным kernel substrate MKS.
+## Используемый код экосистемы
 
-[Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Репозиторий](https://github.com/bboroski/NUNLauncher)
+Полное дерево NUN подключено в core/NUN. Внутри него закреплены все семь проектов:
+- SAMBU — язык, интерпретатор, CLI, IDE и инструменты разработчика.
+- ToolNG — нативное ядро политик и ограниченных workflow.
+- ReaperCripple — bootstrap, rollback, BSP и телеметрия.
+- Kloz — платформенный ABI, арена памяти и ресурсные лимиты.
+- CO — детерминированный lifecycle runtime.
+- SaintSI — наблюдение за health и целостностью.
+- Klipot — реестр и планировщик интеграции.
 
-## Назначение
+Android NDK собирает нативный runtime NUN в libnun_android_bridge.so. SAMBU и Klipot остаются host-инструментами и полностью доступны в подключённом исходном дереве.
 
-Будущий bootstrap supervisor должен:
-- проверять формат и версию kernel image;
-- валидировать memory map, alignment и допустимые диапазоны адресов;
-- проверять необходимые platform capabilities;
-- формировать версионированный boot-information block;
-- передавать управление через определённую architecture entry point;
-- фиксировать ошибку до handoff без скрытого перехода в неизвестный режим.
+## Сборка
 
-## Контракт с ядром
+Требуются JDK 17, Gradle 9.6.0+, Android SDK Platform 36, Android NDK 28.2.13676358 и CMake 3.22.1.
 
-NUNLauncher не должен дублировать kernel memory manager, scheduler или device drivers. Его область ответственности — проверка образа, формирование boot-информации и контролируемая передача управления. Ядро должно проверить полученный контекст до инициализации.
+Клонируйте репозиторий с recursive submodules и запустите:
+- Windows: one.cmd
+- Linux/macOS: python3 one.py
 
-## Текущий статус проверок
+APK будет создан в app/build/outputs/apk/debug/app-debug.apk.
 
-Реализации, сборки и тестового набора пока нет. Загрузочного бинарного файла и проверенной поддержки архитектур не существует.
+## Использование
 
-## Техническая идентичность
-
-**NUNLauncher** — каноническое имя планируемого bootstrap supervisor. GitHub-адрес сохранён для совместимости ссылок.
+Установите APK и выберите NUN Launcher в настройках домашнего экрана Android. Приложение показывает программы со стандартным launcher intent и запускает их без запроса QUERY_ALL_PACKAGES или привилегированного доступа к устройству.
 
 ## Статус
 
-Не использовать этот репозиторий как загрузчик: реализация launcher/bootloader отсутствует.
+Это Android-лаунчер и host-интеграция runtime, а не самостоятельный Android OS image и не bare-metal bootloader. Для загрузочного ядра NUN отдельно нужны архитектурный boot path, memory manager, interrupt layer, драйверы и проверка на эмуляторе/оборудовании.

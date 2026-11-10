@@ -1,0 +1,26 @@
+name: NUN Launcher Android CI
+on:
+  push:
+    branches: [main, android/home-launcher-foundation]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  android-debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+      - name: Install Android toolchains
+        run: |
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0" "cmake;3.22.1" "ndk;28.2.13676358"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.6.0"
+      - name: Build Android launcher and native NUN runtime
+        run: gradle --no-daemon --stacktrace :app:assembleDebug

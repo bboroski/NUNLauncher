@@ -1,33 +1,30 @@
-# NUNLauncher — Kernel Bootstrap Supervisor
+# NUN Launcher — Android home surface for NUN
 
-**A specification scaffold for controlled system-kernel startup.**
+NUN Launcher is a native Android HOME application with a black-and-gold interface, animated app tiles, application search, a system overview and a JNI bridge to the NUN runtime.
 
-Current status: **documentation scaffold only**. The repository does not yet contain launcher code, a bootloader, image configuration, a build pipeline, or tests. NUNLauncher defines the intended narrow contract between firmware/a bootloader and the minimal kernel substrate MKS.
+## Source integration
 
-[Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Repository](https://github.com/bboroski/NUNLauncher)
+The complete NUN repository is linked at core/NUN. NUN pins all seven ecosystem projects as nested submodules:
+- SAMBU — language, interpreter, CLI, IDE and developer tooling.
+- ToolNG — native policy and bounded workflow core.
+- ReaperCripple — bootstrap, rollback, BSP and telemetry.
+- Kloz — platform ABI, memory arena and resource budgets.
+- CO — deterministic lifecycle runtime.
+- SaintSI — health and integrity observation.
+- Klipot — ecosystem registry and integration planner.
 
-## Purpose
+The Android NDK compiles NUN's native runtime into libnun_android_bridge.so. SAMBU and Klipot remain host-side tools in the linked source tree.
 
-A future bootstrap supervisor should:
-- validate the kernel-image format and version;
-- validate the memory map, alignment, and permitted address ranges;
-- verify required platform capabilities;
-- construct a versioned boot-information block;
-- transfer control through a defined architecture entry point;
-- record failures before handoff instead of silently falling back to an unknown mode.
+## Build
 
-## Kernel contract
+Requirements: JDK 17, Gradle 9.6.0+, Android SDK Platform 36, Android NDK 28.2.13676358 and CMake 3.22.1.
 
-NUNLauncher should not duplicate the kernel memory manager, scheduler, or device drivers. Its scope is image validation, boot-information construction, and controlled handoff. The kernel must validate the received context before initialization.
+Clone recursively and run one.cmd on Windows or python3 one.py on Linux/macOS. The debug APK is generated at app/build/outputs/apk/debug/app-debug.apk.
 
-## Current verification status
+## Use
 
-There is no implementation, build, or test suite yet. No bootable binary or verified architecture support exists.
-
-## Technical identity
-
-**NUNLauncher** is the canonical name of the planned bootstrap supervisor. The GitHub address is retained for link compatibility.
+Install the APK, then select NUN Launcher in Android's Home app settings. The launcher discovers apps that expose the standard launcher intent and opens them without requesting broad package visibility or privileged device access.
 
 ## Status
 
-Do not use this repository as a bootloader: no launcher or bootloader implementation exists yet.
+This is an Android launcher and host-runtime integration, not a replacement Android OS image or bare-metal bootloader. A bootable NUN kernel still needs an architecture-specific boot path, memory manager, interrupt layer, device drivers and emulator/hardware validation.

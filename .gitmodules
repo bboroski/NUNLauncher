@@ -1,0 +1,3 @@
+[submodule "core/NUN"]
+	path = core/NUN
+	url = https://github.com/bboroski/NUN.git

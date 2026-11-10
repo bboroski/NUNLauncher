@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17182f"><meta name="description" content="NUNLauncher — independent mobile home environment concept">
+<title>NUNLauncher — Home</title><link rel="stylesheet" href="./styles.css"><script src="./app.js" defer></script>
+</head>
+<body>
+<svg class="icons" aria-hidden="true">
+<symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9a14 14 0 0 1 18 0M6.5 12.5a9 9 0 0 1 11 0M10 16a3.5 3.5 0 0 1 4 0M12 20h.01"/></symbol>
+<symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 10v4M5 10h10v4H5z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 7.2L21 12l-7.2 1.8L12 21l-1.8-7.2L3 12l7.2-2.8L12 2Z"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></symbol>
+<symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 6 6 6-6 6M13 18h7"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8.4 8.4 0 0 1-1.6.9l-.3 1.6h-3l-.3-1.6a8.4 8.4 0 0 1-1.7-.9l-1.4.6-1.5-2.6 1.2-1a7.7 7.7 0 0 1 0-1.9l-1.2-1 1.5-2.6 1.5.6a8.4 8.4 0 0 1 1.6-.9l.3-1.6h3l.3 1.6a8.4 8.4 0 0 1 1.7.9l1.4-.6 1.5 2.6-1.2 1a7.7 7.7 0 0 1-.1 1.8Z" transform="translate(-1 -1)"/></symbol>
+<symbol id="i-bluetooth" viewBox="0 0 24 24"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></symbol>
+<symbol id="i-flash" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-13h-7z"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.8 15.2A8.5 8.5 0 0 1 8.8 3.2 8.5 8.5 0 1 0 20.8 15.2Z"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="4"/></symbol>
+</svg>
+<main class="phone" id="phone">
+<div class="ambient-bg" aria-hidden="true"><div class="aurora aurora-a"></div><div class="aurora aurora-b"></div><div class="celestial-ring ring-a"></div><div class="celestial-ring ring-b"></div><div class="celestial-core"></div><div class="star-field"></div><div class="anime-silhouette"><i></i><b></b></div><span class="bg-caption">NUN / 02</span></div>
+<header class="status-bar"><time id="status-time">09:41</time><button id="quick-open" aria-label="Open quick settings"><span class="status-icons"><svg><use href="#i-wifi"/></svg><b>5G</b><svg><use href="#i-battery"/></svg></span></button></header>
+<section class="home-content" aria-label="NUNLauncher home screen">
+<div class="hello-row"><div><div class="launcher-brand"><img class="brand-flower" src="../assets/duck-ui/duck-mark.svg" alt=""> NUNLAUNCHER <span class="brand-edition">/ AURA</span></div><p class="greeting" id="greeting">A new day, <em>a new orbit.</em></p></div><button class="profile-button" data-launch="Profile" aria-label="User profile"><span>U</span><i>✦</i></button></div>
+<section class="hero-widget">
+<div class="widget-kicker"><span>WEDNESDAY / YOUR SPACE</span><i>✦</i></div>
+<div class="widget-time" id="widget-clock">09<span>:</span>41</div>
+<div class="widget-date" id="widget-date">NOVEMBER 11 / 2026</div>
+<div class="widget-divider"></div>
+<div class="widget-message"><span class="message-orb">✧</span><span><b>Stay in your orbit.</b><small>Make today beautifully yours.</small></span><span class="widget-arrow">↗</span></div>
+<div class="widget-art" aria-hidden="true"><div class="art-ring"></div><div class="art-moon"></div><div class="art-star">✦</div></div>
+</section>
+<label class="search-field"><svg><use href="#i-search"/></svg><input id="home-search" type="search" placeholder="Find something…" autocomplete="off"><kbd>⌕</kbd><span class="search-shortcut">SEARCH</span></label>
+<div class="section-heading"><div><small>YOUR COLLECTION</small><h2>Apps <em>& tools</em></h2></div><button id="all-apps" type="button">APP LIBRARY <span>↗</span></button></div>
+<section class="app-grid" id="home-grid" aria-label="Applications">
+<button class="app-item" data-launch="NUN Core" data-keywords="system core dashboard"><span class="app-icon icon-core"><b>N</b><i>✦</i></span><small>NUN Core</small></button>
+<button class="app-item" data-launch="Files" data-keywords="files documents storage"><span class="app-icon icon-files"><svg><use href="#i-folder"/></svg></span><small>Files</small></button>
+<button class="app-item" data-launch="Terminal" data-keywords="terminal command shell"><span class="app-icon icon-terminal"><svg><use href="#i-terminal"/></svg></span><small>Terminal</small></button>
+<button class="app-item" data-launch="Studio" data-keywords="studio design create"><span class="app-icon icon-studio"><svg><use href="#i-spark"/></svg></span><small>Studio</small></button>
+<button class="app-item" data-launch="Gallery" data-keywords="photos images gallery"><span class="app-icon icon-gallery"><i>◌</i></span><small>Gallery</small></button>
+<button class="app-item" data-launch="Notes" data-keywords="notes writing journal"><span class="app-icon icon-notes">✎</span><small>Notes</small></button>
+<button class="app-item" data-launch="Settings" data-keywords="settings controls preferences"><span class="app-icon icon-settings"><svg><use href="#i-settings"/></svg></span><small>Settings</small></button>
+<button class="app-item" data-launch="Library" data-keywords="library apps catalog"><span class="app-icon icon-library"><svg><use href="#i-grid"/></svg></span><small>Library</small></button>
+</section>
+<div class="page-indicator"><i class="active"></i><i></i><i></i></div>
+<div class="flex-space"></div>
+<nav class="favorite-dock" aria-label="Favorite applications"><button class="favorite-item favorite-phone" data-launch="Phone" aria-label="Phone">◔</button><button class="favorite-item favorite-chat" data-launch="Messages" aria-label="Messages">⌁</button><button class="favorite-item favorite-browser" data-launch="Browser" aria-label="Browser">◎</button><button class="favorite-item favorite-camera" data-launch="Camera" aria-label="Camera"><svg><use href="#i-camera"/></svg></button><button class="dock-library" id="dock-library" aria-label="Open app library"><svg><use href="#i-grid"/></svg></button></nav>
+<div class="gesture-bar"></div>
+</section>
+<section class="app-drawer" id="drawer" aria-hidden="true"><div class="drawer-handle"></div><div class="drawer-header"><div><small>THE NUN COLLECTION</small><h2>Everything <em>within reach.</em></h2></div><button id="drawer-close" aria-label="Close app library">×</button></div><label class="drawer-search"><svg><use href="#i-search"/></svg><input id="drawer-search" type="search" placeholder="Search your apps…" autocomplete="off"></label><div class="drawer-categories"><button class="category active" data-category="all">All</button><button class="category" data-category="system">System</button><button class="category" data-category="creative">Creative</button><button class="category" data-category="daily">Daily</button></div><div class="drawer-grid" id="drawer-grid"></div><p class="drawer-foot">YOUR PERSONAL APPLICATION SPACE</p></section>
+<section class="control-center" id="quick-panel" aria-hidden="true"><div class="control-handle"></div><div class="control-header"><div><small>DEVICE CONTROL</small><h2>Feel the <em>flow.</em></h2></div><button id="quick-close" aria-label="Close quick settings">×</button></div><div class="control-clock"><strong id="panel-clock">09:41</strong><span id="panel-date">WED · NOV 11</span></div><div class="control-grid">
+<button class="control-tile active" data-toggle="wifi" aria-pressed="true"><svg><use href="#i-wifi"/></svg><span>Wi-Fi</span><small>Connected</small></button>
+<button class="control-tile active" data-toggle="bluetooth" aria-pressed="true"><svg><use href="#i-bluetooth"/></svg><span>Bluetooth</span><small>On</small></button>
+<button class="control-tile" data-toggle="flash" aria-pressed="false"><svg><use href="#i-flash"/></svg><span>Flashlight</span><small>Off</small></button>
+<button class="control-tile" data-toggle="focus" aria-pressed="false"><svg><use href="#i-moon"/></svg><span>Quiet mode</span><small>Off</small></button>
+</div><label class="brightness-control"><span>SCREEN LIGHT</span><input id="brightness" type="range" min="40" max="100" value="90"></label><div class="control-footer"><span>LOCAL VISUAL PREVIEW</span><button id="settings-shortcut">PERSONALIZE ↗</button></div></section>
+</main>
+<dialog id="app-dialog" class="launch-dialog"><button id="dialog-close" class="dialog-close" aria-label="Close">×</button><div class="dialog-orbit">✦</div><small class="dialog-kicker">NUNLAUNCHER / APPLICATION</small><h2 id="dialog-title">Application</h2><p id="dialog-copy"></p><div class="dialog-note"><i></i> SHORTCUT PREVIEW · NO APP SERVICE CONNECTED</div><button id="dialog-ok" class="dialog-action">Back to your space <span>↗</span></button></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body></html>

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "ecosystem": "SAMBU",
+  "module_id": "nun-launcher",
+  "repository": "bboroski/NUNLauncher",
+  "display_name": "NUNLauncher",
+  "version": null,
+  "role": "kernel-bootstrap-supervisor-specification",
+  "runtime": [
+    "firmware/bootloader-specific implementation"
+  ],
+  "maturity": "specification-only",
+  "provides": [
+    "kernel-image-validation-contract-v1",
+    "versioned-boot-information-block",
+    "controlled-kernel-handoff"
+  ],
+  "consumes": [
+    "nun-kernel-image-contract-v1",
+    "platform-memory-map",
+    "boot-verification-material"
+  ],
+  "dependencies": [
+    {
+      "module_id": "nun-kernel",
+      "relation": "required",
+      "status": "planned",
+      "scope": "The supervisor is specified against the NUN kernel image and handoff contract; neither implementation exists yet."
+    }
+  ],
+  "boundaries": [
+    "NUNLauncher is a specification-only repository; no bootloader, launcher binary, image writer or installer is implemented.",
+    "Image validation must precede handoff and must fail closed on unknown format, version, address range or signature state.",
+    "Automatic flashing or boot-chain replacement is prohibited without explicit operator approval and a verified recovery path.",
+    "The launcher must not duplicate kernel memory management, scheduling or device-driver responsibilities."
+  ],
+  "verification": {
+    "host_tests": "Not implemented; specification and manifest validation only.",
+    "target_validation": "Not implemented; no bootloader, image format implementation or target is declared.",
+    "evidence": [
+      "README.md",
+      "ecosystem/update-policy.json"
+    ]
+  }
+}

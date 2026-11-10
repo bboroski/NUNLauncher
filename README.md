@@ -49,3 +49,7 @@ NUNLauncher не керує пам'яттю ядра після передачі
 ## Екосистема
 
 [SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN).
+
+## Reaper cycle boot preflight
+
+[Image validation contract](docs/REAPER_BOOT_PREFLIGHT.md) — architecture, ABI, memory-map, entry-point, digest, and signature gates for future boot artifacts.

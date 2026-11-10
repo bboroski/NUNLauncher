@@ -31,3 +31,8 @@ NUNLauncher не повинен дублювати kernel memory manager, schedu
 ## Статус
 
 Не використовувати як завантажувач: реалізованого bootloader/launcher тут ще немає.
+
+
+## Профіль термінології Mass Effect
+
+[Профіль інженерного перенесення термінів Жнеців](docs/reaper-domain-transfer.md) — доменна карта для NUNLauncher, межі використання лору та критерії перевірки.

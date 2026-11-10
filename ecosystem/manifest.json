@@ -1,0 +1,26 @@
+{
+  "project_id": "nun-launcher",
+  "schema_version": 1,
+  "contract_major": 1,
+  "role": "bootstrap-supervisor-specification",
+  "maturity": "specification-only",
+  "provides": [
+    "kernel-image-validation-contract-v1",
+    "versioned-boot-information-block",
+    "controlled-kernel-handoff"
+  ],
+  "consumes": [
+    "nun-kernel-image-contract-v1",
+    "platform-memory-map",
+    "boot-verification-material"
+  ],
+  "optional_adapters": [
+    "Kloz platform capability descriptor after implementation"
+  ],
+  "safety": [
+    "No bootloader or launcher binary exists",
+    "Image validation must fail closed",
+    "No automatic flashing or boot-chain replacement",
+    "Recovery path and operator approval required"
+  ]
+}

@@ -1,8 +1,8 @@
-# KBS — Kernel Bootstrap Supervisor
+# NUNLauncher — Kernel Bootstrap Supervisor
 
 **Спецификационный каркас для контролируемого запуска системного ядра.**
 
-Текущий статус: **только заготовка документации**. В репозитории пока нет кода launcher, bootloader, конфигурации образа, build pipeline или тестов. KBS задаёт предполагаемый узкий контракт между firmware/bootloader и минимальным kernel substrate MKS.
+Текущий статус: **только заготовка документации**. В репозитории пока нет кода launcher, bootloader, конфигурации образа, build pipeline или тестов. NUNLauncher задаёт предполагаемый узкий контракт между firmware/bootloader и минимальным kernel substrate MKS.
 
 [Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Репозиторий](https://github.com/bboroski/NUNLauncher)
 
@@ -18,7 +18,7 @@
 
 ## Контракт с ядром
 
-KBS не должен дублировать kernel memory manager, scheduler или device drivers. Его область ответственности — проверка образа, формирование boot-информации и контролируемая передача управления. Ядро должно проверить полученный контекст до инициализации.
+NUNLauncher не должен дублировать kernel memory manager, scheduler или device drivers. Его область ответственности — проверка образа, формирование boot-информации и контролируемая передача управления. Ядро должно проверить полученный контекст до инициализации.
 
 ## Текущий статус проверок
 
@@ -26,7 +26,7 @@ KBS не должен дублировать kernel memory manager, scheduler и
 
 ## Техническая идентичность
 
-**KBS** — каноническое имя планируемого bootstrap supervisor. GitHub-адрес сохранён для совместимости ссылок.
+**NUNLauncher** — каноническое имя планируемого bootstrap supervisor. GitHub-адрес сохранён для совместимости ссылок.
 
 ## Статус
 

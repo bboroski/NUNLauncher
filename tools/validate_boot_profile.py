@@ -66,7 +66,8 @@ def validate_profile(document: Any) -> list[str]:
             errors.append(f"{prefix}.start is not aligned")
         permissions = region.get("permissions")
         if not isinstance(permissions, list) or any(
-            item not in {"read", "write", "execute"} for item in permissions
+            not isinstance(item, str) or item not in ("read", "write", "execute")
+            for item in permissions
         ):
             errors.append(f"{prefix}.permissions is invalid")
         if not isinstance(region.get("name"), str) or not region["name"].strip():
@@ -111,10 +112,12 @@ def validate_profile(document: Any) -> list[str]:
         if recovery.get("rollback_enabled") is not True:
             errors.append("recovery.rollback_enabled must be true")
         fallback = recovery.get("fallback_order")
-        if not isinstance(fallback, list) or len(set(fallback)) != len(fallback) or any(
+        if not isinstance(fallback, list) or any(
             not isinstance(item, str) or not item.strip() for item in fallback
         ):
-            errors.append("recovery.fallback_order must contain unique non-empty strings")
+            errors.append("recovery.fallback_order must contain non-empty strings")
+        elif len(set(fallback)) != len(fallback):
+            errors.append("recovery.fallback_order must contain unique strings")
     return errors
 
 

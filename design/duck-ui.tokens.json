@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "system": "Duck Black / Yellow",
+  "principles": [
+    "clarity over decoration",
+    "yellow is a semantic accent",
+    "keyboard and D-pad access are first-class",
+    "scale with system font and display settings",
+    "no color-only status encoding"
+  ],
+  "color": {
+    "canvas": "#0D0D0D",
+    "surface": "#1A1A1A",
+    "surface_alt": "#141414",
+    "surface_hover": "#202020",
+    "accent": "#FFD600",
+    "accent_muted": "#BFA100",
+    "accent_selected": "#332B00",
+    "text": "#E6E6E6",
+    "text_muted": "#999999",
+    "text_disabled": "#4D4D4D",
+    "border": "#262626",
+    "success": "#4CAF50",
+    "warning": "#FFD600",
+    "danger": "#FF4444",
+    "focus": "#FFD600"
+  },
+  "typography": {
+    "ui": ["Roboto", "sans-serif"],
+    "code": ["monospace"],
+    "body_size_sp": 14,
+    "body_line_height": 1.5,
+    "heading_weight": 700,
+    "body_weight": 400
+  },
+  "spacing_dp": [4, 8, 12, 16, 20, 24, 32, 40, 48],
+  "radii_dp": {"small": 4, "control": 6, "card": 10, "modal": 12},
+  "motion_ms": {"micro": 120, "standard": 200, "maximum": 250},
+  "layout": {
+    "min_columns": 3,
+    "max_columns": 6,
+    "preferred_tile_width_dp": 88,
+    "minimum_touch_target_dp": 48,
+    "respect_system_font_scale": true,
+    "respect_display_cutouts_and_insets": true,
+    "support_landscape_and_foldables": true
+  },
+  "accessibility": {
+    "focus_visible_required": true,
+    "status_requires_text_and_icon": true,
+    "screen_reader_labels_required": true,
+    "high_contrast_mode_respected": true,
+    "reduced_motion_respected": true
+  },
+  "behavior": {
+    "yellow_usage": ["brand", "focus", "selected navigation", "primary action"],
+    "app_catalog_is_local": true,
+    "network_required_for_home": false,
+    "telemetry_default": false,
+    "broad_package_visibility": false
+  }
+}

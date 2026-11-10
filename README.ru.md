@@ -2,7 +2,7 @@
 
 **Спецификационный каркас для контролируемого запуска системного ядра.**
 
-Текущий статус: **только заготовка документации**. В репозитории пока нет кода launcher, bootloader, конфигурации образа, build pipeline или тестов. NUNLauncher задаёт предполагаемый узкий контракт между firmware/bootloader и минимальным kernel substrate MKS.
+Текущий статус: **только заготовка документации**. В репозитории пока нет кода launcher, bootloader, конфигурации образа, build pipeline или тестов. NUNLauncher задаёт предполагаемый узкий контракт между firmware/bootloader и минимальным kernel substrate NUN.
 
 [Українська](README.md) · [English](README.en.md) · [Русский](README.ru.md) · [Репозиторий](https://github.com/bboroski/NUNLauncher)
 

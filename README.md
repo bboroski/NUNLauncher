@@ -69,3 +69,10 @@ NUNLauncher — host-side C11 validator для boot metadata, а не графі
 
 ---
 **Створено з любов'ю до інженерії, системності та людей.**
+
+
+## Графічний інтерфейс Boot Validation Console
+
+[Прототип консолі NUNLauncher](docs/gui/index.html) та [векторне прев'ю 1600 × 900](docs/gui/preview.svg) візуалізують перевірку заголовка образу, архітектурні gates, межі пам'яті та майбутній boot-information handoff. **Це концепція host-side validator, а не bootloader: прошивка не передає керування, ядро не завантажується й ОС не запускається.**
+
+Інтерфейс адаптивний, підтримує клавіатурну навігацію та reduced motion. Дивіться [контракт образу ядра](docs/BOOT_IMAGE_CONTRACT.md), [інтеграцію екосистеми](docs/ECOSYSTEM_INTEGRATION.md) та [інженерне врядування](docs/ENGINEERING_GOVERNANCE.md).

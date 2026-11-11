@@ -113,7 +113,7 @@ class MainActivity : Activity() {
         root.addView(countLabel, matchWrap())
 
         appGrid = GridLayout(this).apply {
-            columnCount = 4
+            columnCount = calculateColumnCount()
             alignmentMode = GridLayout.ALIGN_BOUNDS
             useDefaultMargins = false
         }
@@ -227,8 +227,8 @@ class MainActivity : Activity() {
             }
 
             val params = GridLayout.LayoutParams(
-                GridLayout.spec(GridLayout.UNDEFINED, 1f),
-                GridLayout.spec(GridLayout.UNDEFINED)
+                GridLayout.spec(GridLayout.UNDEFINED),
+                GridLayout.spec(GridLayout.UNDEFINED, 1f)
             ).apply {
                 width = 0
                 height = dp(112)
@@ -284,6 +284,9 @@ class MainActivity : Activity() {
             setStroke(dp(1), stroke)
         }
     }
+
+    private fun calculateColumnCount(): Int =
+        (resources.configuration.screenWidthDp / 104).coerceIn(3, 6)
 
     private fun matchWrap() = LinearLayout.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,

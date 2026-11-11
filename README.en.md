@@ -1,48 +1,37 @@
-<p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
-<h1 align="center">NUNLauncher</h1>
-<p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
-<p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
+# NUNLauncher — Kernel Bootstrap Supervisor
 
----
+NUNLauncher is the pre-handoff admission layer for NUN boot images. It validates
+the image manifest, exact file size and SHA-256, x86_64 target contract, BIOS
+and UEFI El Torito entries, the ELF64 kernel entry point and the AMD64 PE/COFF
+UEFI fallback loader.
 
-**NUNLauncher defines the future narrow boundary between firmware/bootloader and the NUN minimal kernel.** Its responsibility is to validate an image, prepare boot context, and transfer control through a defined entry point.
+## Implemented
 
-## Intended functions
+- Python CLI and fail-closed manifest validation.
+- Read-only ISO inspection with xorriso.
+- ELF64/LE/EM_X86_64/ET_DYN and executable PT_LOAD entry checks.
+- EFI/BOOT/BOOTX64.EFI PE/COFF AMD64 checks.
+- Host-side positive and negative unit tests.
+- CI that builds NUN, verifies the image, and boots it in QEMU through BIOS and
+  x86_64 UEFI (OVMF).
 
-- Validate kernel-image format and version.
-- Validate memory map, alignment, and permitted address ranges.
-- Check required platform capabilities.
-- Build a versioned boot-information block.
-- Transfer control through an architecture entry point.
-- Report pre-handoff failures explicitly instead of silently entering an unknown mode.
+Run:
 
-## Current status
+    make test
+    make verify IMAGE=../NUN/build/NUN.iso MANIFEST=../NUN/build/NUN.image.json
 
-The repository currently contains no launcher code, bootloader, image configuration, build pipeline, tests, or bootable binary. No architecture is verified as supported. Elbrus/E2K remains an architecture workstream, not a qualified target.
+Firmware launches Limine from the hybrid image; Limine loads the NUN kernel and
+performs the protocol handoff. NUNLauncher is the image admission supervisor,
+not a replacement firmware or a second-stage kernel loader.
 
-## NUN contract
+The currently qualified profile is **x86_64 with BIOS and x86_64 UEFI only**.
+No AArch64, RISC-V, E2K/Elbrus, Apple Silicon or other architecture support is
+claimed.
 
-[NUN](https://github.com/bboroski/NUN) must independently validate the handoff context before initialization. NUNLauncher is responsible only for image validation, boot-information construction, and controlled transfer. Memory management, scheduling, and drivers belong to the kernel.
+NUN images are currently unsigned. SHA-256 detects file/manifest mismatch but
+does not authenticate the publisher. Secure Boot trust provisioning, signed
+manifests, key rotation and TPM attestation are not implemented. The
+`--require-signature` option therefore fails closed.
 
-## Implementation plan
-
-| Stage | Readiness evidence |
-|---|---|
-| Image contract | Format, version, checksum, and compatibility are defined |
-| Memory validation | Boundary, alignment, and address-range tests pass |
-| Capability gate | An incompatible platform is rejected before handoff |
-| Boot information | Handoff structure is versioned and checked by the kernel |
-| Handoff | Entry point is verified in an emulator and on target hardware |
-
-Pre-handoff failures must be explicit. An unknown mode must never be entered silently. Host tests do not prove a real boot on a CPU or board.
-
-## Ecosystem and license
-
-Primary kernel project: [NUN](https://github.com/bboroski/NUN). Related components: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI), and [Klipot](https://github.com/bboroski/Klipot).
-
-No <code>LICENSE</code> file is present; no license is declared. Define the terms before public distribution.
-
----
-
-**Built with love for systems engineering and people.**
+See [BOOT_SUPERVISOR.md](docs/BOOT_SUPERVISOR.md) and
+[the accepted image manifest schema](spec/nun-image-manifest.schema.json).

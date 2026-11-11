@@ -1,48 +1,35 @@
-<p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
-<h1 align="center">NUNLauncher</h1>
-<p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
-<p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
+# NUNLauncher — супервизор начальной загрузки ядра
 
----
+NUNLauncher — слой допуска образов NUN перед передачей управления ядру.
+Он проверяет манифест, точный размер и SHA-256, профиль x86_64, BIOS/UEFI
+El Torito entries, ELF64 entry point ядра и EFI fallback loader в формате
+PE/COFF AMD64.
 
-**NUNLauncher определяет будущую узкую границу между firmware/bootloader и минимальным ядром NUN.** Его задача — проверить образ, сформировать boot-контекст и передать управление через заданную точку входа.
+## Реализовано
 
-## Предполагаемые функции
+- Python CLI и строгая fail-closed проверка манифеста.
+- Проверка ISO в режиме чтения через xorriso.
+- Проверка ELF64/LE/EM_X86_64/ET_DYN и исполняемого PT_LOAD entry point.
+- Проверка PE/COFF AMD64 для EFI/BOOT/BOOTX64.EFI.
+- Позитивные и негативные host unit-тесты.
+- CI: сборка NUN, проверка образа и запуск в QEMU через BIOS и x86_64 UEFI.
 
-- Проверка формата и версии kernel image.
-- Проверка memory map, alignment и допустимых диапазонов адресов.
-- Проверка необходимых platform capabilities.
-- Формирование версионированного boot-information block.
-- Передача управления через architecture entry point.
-- Явная фиксация ошибок до handoff без скрытого перехода в неизвестный режим.
+Команды:
 
-## Текущий статус
+    make test
+    make verify IMAGE=../NUN/build/NUN.iso MANIFEST=../NUN/build/NUN.image.json
 
-В репозитории пока нет launcher-кода, bootloader, конфигурации образа, build pipeline, тестов или bootable binary. Ни одна архитектура не подтверждена как поддерживаемая. Elbrus/E2K остаётся архитектурным направлением, а не квалифицированной платформой.
+Firmware запускает Limine из гибридного ISO; Limine загружает ядро NUN и
+выполняет передачу управления по своему протоколу. NUNLauncher — супервизор
+проверки образа, а не замена firmware или второй kernel loader.
 
-## Контракт NUN
+Текущий квалифицированный профиль: **только x86_64 с BIOS и x86_64 UEFI**.
+Поддержка AArch64, RISC-V, E2K/Эльбрус, Apple Silicon и других архитектур
+не заявляется.
 
-[NUN](https://github.com/bboroski/NUN) должен самостоятельно проверить handoff-контекст до инициализации. NUNLauncher отвечает только за проверку образа, формирование boot-information block и контролируемую передачу управления. Управление памятью, планирование и драйверы относятся к ядру.
+Образы пока unsigned. SHA-256 выявляет несовпадение файла и манифеста, но не
+подтверждает издателя. Secure Boot trust store, подпись манифеста, ротация
+ключей и TPM attestation ещё не реализованы; `--require-signature`
+поэтому отклоняет образ.
 
-## План реализации
-
-| Этап | Доказательство готовности |
-|---|---|
-| Image contract | Определены формат, версия, checksum и совместимость |
-| Memory validation | Проходят boundary, alignment и address-range тесты |
-| Capability gate | Несовместимая платформа отклоняется до handoff |
-| Boot information | Handoff-структура версионирована и проверяется ядром |
-| Handoff | Entry point проверен в эмуляторе и на целевом оборудовании |
-
-Ошибки до handoff должны фиксироваться явно. Неизвестный режим нельзя запускать скрытно. Host-тесты не доказывают реальную загрузку на процессоре или плате.
-
-## Экосистема и лицензия
-
-Основной kernel-проект: [NUN](https://github.com/bboroski/NUN). Связанные компоненты: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI) и [Klipot](https://github.com/bboroski/Klipot).
-
-Файл <code>LICENSE</code> отсутствует; лицензия не объявлена. Определите условия до публичного распространения.
-
----
-
-**Создано с любовью к системной инженерии и людям.**
+Подробности: [BOOT_SUPERVISOR.md](docs/BOOT_SUPERVISOR.md).

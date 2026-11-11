@@ -1,0 +1,109 @@
+name: NUNLauncher boot supervisor
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nunlauncher-boot-supervisor
+  cancel-in-progress: true
+
+jobs:
+  verify-and-boot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out NUNLauncher
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run NUNLauncher host tests
+        run: make test
+
+      - name: Check out the NUN boot implementation
+        uses: actions/checkout@v4
+        with:
+          repository: bboroski/NUN
+          ref: feat/boot-media-installer
+          path: .deps/NUN
+
+      - name: Install NUN build and emulator dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential gcc clang lld nasm make curl xorriso mtools python3 qemu-system-x86 ovmf
+
+      - name: Build NUN boot image and manifest
+        run: make -C .deps/NUN test iso
+
+      - name: Verify image before boot handoff
+        run: |
+          PYTHONPATH=. python3 -m nunlauncher_boot.cli verify \
+            --image .deps/NUN/build/NUN.iso \
+            --manifest .deps/NUN/build/NUN.image.json \
+            --json | tee .deps/NUN/build/nunlauncher-verification.json
+
+      - name: Boot the same image through BIOS
+        shell: bash
+        run: |
+          set +e
+          timeout 20s qemu-system-x86_64 \
+            -machine q35 -m 512M -cdrom .deps/NUN/build/NUN.iso \
+            -serial stdio -display none -monitor none -no-reboot \
+            > .deps/NUN/build/nunlauncher-qemu-bios.log 2>&1
+          status=$?
+          set -e
+          [[ "$status" -eq 124 ]] || { cat .deps/NUN/build/nunlauncher-qemu-bios.log; exit 1; }
+          grep -Fq "NUN: boot path ready" .deps/NUN/build/nunlauncher-qemu-bios.log
+
+      - name: Boot the same image through x86_64 UEFI
+        shell: bash
+        run: |
+          set -euo pipefail
+          OVMF_CODE=""
+          for firmware_dir in /usr/share/OVMF /usr/share/edk2; do
+            [[ -d "$firmware_dir" ]] || continue
+            candidate="$(find "$firmware_dir" -type f \
+              \( -name 'OVMF_CODE.fd' -o -name 'OVMF_CODE_4M.fd' \) 2>/dev/null | sort | head -n 1 || true)"
+            if [[ -n "$candidate" && -r "$candidate" ]]; then
+              OVMF_CODE="$candidate"
+              break
+            fi
+          done
+          [[ -n "$OVMF_CODE" ]] || { echo "OVMF firmware not found" >&2; exit 1; }
+          OVMF_VARS="${OVMF_CODE/OVMF_CODE/OVMF_VARS}"
+          [[ -r "$OVMF_VARS" ]] || { echo "OVMF variable template not found: $OVMF_VARS" >&2; exit 1; }
+          cp "$OVMF_VARS" .deps/NUN/build/OVMF_VARS.fd
+          set +e
+          timeout 20s qemu-system-x86_64 \
+            -machine q35 -m 512M \
+            -drive if=pflash,format=raw,readonly=on,file="$OVMF_CODE" \
+            -drive if=pflash,format=raw,file=.deps/NUN/build/OVMF_VARS.fd \
+            -cdrom .deps/NUN/build/NUN.iso \
+            -serial stdio -display none -monitor none -no-reboot \
+            > .deps/NUN/build/nunlauncher-qemu-uefi.log 2>&1
+          status=$?
+          set -e
+          [[ "$status" -eq 124 ]] || { cat .deps/NUN/build/nunlauncher-qemu-uefi.log; exit 1; }
+          grep -Fq "NUN: boot path ready" .deps/NUN/build/nunlauncher-qemu-uefi.log
+
+      - name: Upload verified boot artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: NUNLauncher-verified-boot
+          path: |
+            .deps/NUN/build/NUN.iso
+            .deps/NUN/build/NUN.image.json
+            .deps/NUN/build/kernel.elf
+            .deps/NUN/build/nunlauncher-verification.json
+            .deps/NUN/build/nunlauncher-qemu-bios.log
+            .deps/NUN/build/nunlauncher-qemu-uefi.log
+          if-no-files-found: warn

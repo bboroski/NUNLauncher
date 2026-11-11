@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NUNLauncher</string>
+    <string name="brand_title">NUN</string>
+    <string name="brand_subtitle">ЗАПУСКАЧ / ANDROID HOME</string>
+    <string name="search_hint">Пошук встановлених застосунків</string>
+    <string name="search_accessibility">Пошук встановлених застосунків</string>
+    <string name="core_disconnected">Ядро NUN: не підключено · режим Android</string>
+    <string name="app_discovery_restricted">Android обмежив пошук застосунків</string>
+    <string name="app_discovery_failed">Не вдалося отримати список застосунків</string>
+    <string name="app_count">%1$d застосунків</string>
+    <string name="no_apps_available">Для цього профілю не знайдено доступних застосунків.</string>
+    <string name="no_search_matches">За цим запитом нічого не знайдено.</string>
+    <string name="launch_app_accessibility">Запустити %1$s</string>
+    <string name="app_no_longer_available">Цей застосунок більше недоступний.</string>
+    <string name="app_launch_denied">Android відхилив запит на запуск.</string>
+    <string name="app_launch_failed">Не вдалося запустити застосунок.</string>
+    <string name="favorite_added">Додано до обраного</string>
+    <string name="favorite_removed">Вилучено з обраного</string>
+</resources>

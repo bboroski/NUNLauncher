@@ -42,6 +42,17 @@ This is not yet a bootloader or bootable binary. Firmware entry, linker scripts,
 
 NUNLauncher is a host-side C11 validator for boot metadata, not a graphical application. No GUI screenshots are available; the image below shows only the shared Duck Black / Yellow documentation style.
 
+## Host-side image validation
+
+`tools/validate_boot_image.py` checks the JSON manifest, SHA-256 digest, safe image path, memory bounds, and entry-point alignment. This is metadata validation, not a bootloader and not evidence that an architecture is supported.
+
+```sh
+python tools/validate_boot_image.py path/to/kernel.manifest.json --target x86_64
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+The validator does not load or execute code. Signature verification, emulator boot testing, and physical-target qualification remain separate stages.
+
 <p align="center"><img src="assets/duck-ui/duck-ui-preview.svg" alt="Shared Duck Black Yellow design system; not a NUNLauncher interface" width="960"></p>
 
 ## Engineering quality

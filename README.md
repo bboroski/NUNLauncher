@@ -6,6 +6,14 @@
 <sub>Оновлено: 2026-11-11</sub>
 
 
+
+## NEON SYNDICATE — візуальна система
+
+<p align="center"><img src="assets/neon-syndicate/overview.svg" alt="NUNLauncher — NEON SYNDICATE vector visual" width="1200"></p>
+<p align="center"><em>Векторна схема 1920×1200: C11 HOST VALIDATOR / NOT A BOOTLOADER. Це концепція/архітектурна візуалізація, а не скриншот працюючої системи.</em></p>
+
+[Брендбук](design/NEON_SYNDICATE.md) · [Токени](design/neon-syndicate.tokens.json)
+
 ## Навігація
 
 - [Поточні можливості](#поточні-можливості)
@@ -40,9 +48,9 @@ python one.py check
 
 ## Інтерфейс і візуальні матеріали
 
-NUNLauncher — host-side C11 validator для boot metadata, а не графічний застосунок. Скриншотів GUI немає; зображення нижче показує лише спільний стиль документації Duck Black / Yellow.
+NUNLauncher — host-side C11 validator для boot metadata, а не графічний застосунок. Скриншотів GUI немає; зображення нижче показує лише спільний стиль документації NEON SYNDICATE.
 
-<p align="center"><img src="assets/duck-ui/duck-ui-preview.svg" alt="Спільний дизайн Duck Black Yellow; не інтерфейс NUNLauncher" width="960"></p>
+<p align="center"><img src="assets/neon-syndicate/overview.svg" alt="Спільний дизайн Duck Black Yellow; не інтерфейс NUNLauncher" width="960"></p>
 
 ## Інженерна якість
 - Перевіряйте збірку й тести саме для цільової платформи; host CI не замінює hardware qualification.
@@ -62,7 +70,7 @@ NUNLauncher — host-side C11 validator для boot metadata, а не графі
 Репозиторії зберігають власні назви, код, API, цикли випуску та межі відповідальності. Інтеграція означає узгоджені контракти, а не автоматичне злиття незалежних runtime.
 
 ## Дизайн і документація
-Базовий інтерфейсний напрям екосистеми — **Duck Black / Yellow**: чорні поверхні, жовтий акцент для дій і станів, читабельна типографіка, доступний контраст, клавіатурна навігація та підтримка reduced motion. Деталі дивіться в [design/DUCK_UI_SYSTEM.md](design/DUCK_UI_SYSTEM.md), якщо файл присутній у цьому репозиторії.
+Базовий інтерфейсний напрям екосистеми — **NEON SYNDICATE**: чорні поверхні, жовтий акцент для дій і станів, читабельна типографіка, доступний контраст, клавіатурна навігація та підтримка reduced motion. Деталі дивіться в [design/NEON_SYNDICATE.md](design/NEON_SYNDICATE.md), якщо файл присутній у цьому репозиторії.
 
 ## Ліцензія
 Ліцензію не оголошено; файл LICENSE відсутній.

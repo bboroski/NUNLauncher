@@ -4,10 +4,9 @@
 <p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 
+---
 
-<p align="center"><sub><a href="design/DUCK_UI_SYSTEM.md">Duck Black / Yellow UI standard</a> · <a href="assets/duck-ui/duck-ui-preview.svg">Vector UI preview</a></sub></p>
-
-**NUNLauncher описує майбутню вузьку межу між firmware/bootloader та мінімальним ядром NUN.** Його задача — перевірити образ, сформувати контекст і передати керування через визначений entry point.
+**NUNLauncher визначає майбутню вузьку межу між firmware/bootloader та мінімальним ядром NUN.** Його задача — перевірити образ, сформувати контекст і передати керування через визначений entry point.
 
 ## Цільові функції
 
@@ -19,8 +18,6 @@
 - Явна фіксація помилки до handoff без прихованого переходу в невідомий режим.
 
 ## Поточний стан
-
-<badge>SPECIFICATION ONLY</badge>
 
 У репозиторії наразі немає launcher-коду, bootloader, конфігурації образу, build pipeline, тестів або bootable binary. Підтримка жодної архітектури не підтверджена. Elbrus/E2K залишається напрямом архітектурної роботи, а не перевіреною платформою.
 
@@ -42,7 +39,7 @@
 
 ## Екосистема та ліцензія
 
-Пов'язаний kernel-проєкт: [NUN](https://github.com/bboroski/NUN). Інженерні компоненти екосистеми: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI) і [Klipot](https://github.com/bboroski/Klipot).
+Основний kernel-проєкт: [NUN](https://github.com/bboroski/NUN). Суміжні компоненти: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI) та [Klipot](https://github.com/bboroski/Klipot).
 
 Файл <code>LICENSE</code> відсутній; ліцензію не оголошено. Визначте умови до публічного розповсюдження.
 

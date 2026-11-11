@@ -19,8 +19,6 @@
 
 ## Current status
 
-<badge>SPECIFICATION ONLY</badge>
-
 The repository currently contains no launcher code, bootloader, image configuration, build pipeline, tests, or bootable binary. No architecture is verified as supported. Elbrus/E2K remains an architecture workstream, not a qualified target.
 
 ## NUN contract
@@ -41,7 +39,7 @@ Pre-handoff failures must be explicit. An unknown mode must never be entered sil
 
 ## Ecosystem and license
 
-Related kernel project: [NUN](https://github.com/bboroski/NUN). Engineering ecosystem components: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI), and [Klipot](https://github.com/bboroski/Klipot).
+Primary kernel project: [NUN](https://github.com/bboroski/NUN). Related components: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI), and [Klipot](https://github.com/bboroski/Klipot).
 
 No <code>LICENSE</code> file is present; no license is declared. Define the terms before public distribution.
 

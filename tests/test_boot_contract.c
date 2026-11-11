@@ -85,7 +85,31 @@ int main(void)
                                  &ram, 1u, NUNL_ARCH_X86_64, &entry);
     assert(result == NUNL_EMEMORY);
 
+    {
+        const nunl_memory_range_t adjacent[] = {
+            {UINT64_C(0x00100000), UINT64_C(0x00002000), NUNL_MEMORY_USABLE_RAM, 0u},
+            {UINT64_C(0x00102000), UINT64_C(0x00001000), NUNL_MEMORY_RESERVED, 0u}
+        };
+        const nunl_memory_range_t overlapping[] = {
+            {UINT64_C(0x00100000), UINT64_C(0x00002000), NUNL_MEMORY_USABLE_RAM, 0u},
+            {UINT64_C(0x00101000), UINT64_C(0x00001000), NUNL_MEMORY_RESERVED, 0u}
+        };
+        const nunl_memory_range_t overflowing[] = {
+            {UINT64_MAX - UINT64_C(3), UINT64_C(8), NUNL_MEMORY_USABLE_RAM, 0u}
+        };
+        assert(nunl_validate_memory_map(adjacent, 2u) == NUNL_OK);
+        assert(nunl_validate_memory_map(overlapping, 2u) == NUNL_EOVERLAP);
+        assert(nunl_validate_memory_map(overflowing, 1u) == NUNL_EMEMORY);
+        assert(nunl_validate_memory_map(NULL, 1u) == NUNL_EINVAL);
+
+        make_image(image, NUNL_ARCH_X86_64);
+        assert(nunl_validate_image(image, sizeof(image), UINT64_C(0x00100000),
+                                   overlapping, 2u, NUNL_ARCH_X86_64, &entry)
+               == NUNL_EOVERLAP);
+    }
+
     assert(strcmp(nunl_result_name(NUNL_OK), "ok") == 0);
     assert(nunl_image_header_crc32(NULL, NUNL_IMAGE_HEADER_SIZE) == 0u);
+    assert(strcmp(nunl_result_name(NUNL_EOVERLAP), "overlapping_memory_ranges") == 0);
     return 0;
 }

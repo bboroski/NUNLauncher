@@ -20,6 +20,42 @@ static uint64_t read_le64(const uint8_t *bytes)
            ((uint64_t)read_le32(bytes + 4) << 32);
 }
 
+nunl_result_t nunl_validate_memory_map(const nunl_memory_range_t *memory_map,
+                                       size_t memory_map_count)
+{
+    size_t i, j;
+    if (memory_map == NULL || memory_map_count == 0u ||
+        memory_map_count > NUNL_MAX_MEMORY_RANGES) {
+        return NUNL_EINVAL;
+    }
+    for (i = 0u; i < memory_map_count; ++i) {
+        const nunl_memory_range_t *left = &memory_map[i];
+        uint64_t left_end;
+        if (left->size == 0u || left->base > UINT64_MAX - left->size ||
+            left->reserved != 0u ||
+            left->type < (uint32_t)NUNL_MEMORY_USABLE_RAM ||
+            left->type > (uint32_t)NUNL_MEMORY_MMIO) {
+            return NUNL_EMEMORY;
+        }
+        left_end = left->base + left->size;
+        for (j = i + 1u; j < memory_map_count; ++j) {
+            const nunl_memory_range_t *right = &memory_map[j];
+            uint64_t right_end;
+            if (right->size == 0u || right->base > UINT64_MAX - right->size ||
+                right->reserved != 0u ||
+                right->type < (uint32_t)NUNL_MEMORY_USABLE_RAM ||
+                right->type > (uint32_t)NUNL_MEMORY_MMIO) {
+                return NUNL_EMEMORY;
+            }
+            right_end = right->base + right->size;
+            if (left->base < right_end && right->base < left_end) {
+                return NUNL_EOVERLAP;
+            }
+        }
+    }
+    return NUNL_OK;
+}
+
 uint32_t nunl_image_header_crc32(const void *header_bytes, size_t header_length)
 {
     const uint8_t *bytes = (const uint8_t *)header_bytes;
@@ -65,10 +101,15 @@ nunl_result_t nunl_validate_image(const void *image,
     size_t i;
     int contained = 0;
 
+    nunl_result_t map_result;
     if (bytes == NULL || memory_map == NULL || memory_map_count == 0u ||
         memory_map_count > NUNL_MAX_MEMORY_RANGES || entry_address_out == NULL ||
         target_architecture == NUNL_ARCH_UNKNOWN) {
         return NUNL_EINVAL;
+    }
+    map_result = nunl_validate_memory_map(memory_map, memory_map_count);
+    if (map_result != NUNL_OK) {
+        return map_result;
     }
     if (available_bytes < NUNL_IMAGE_HEADER_SIZE) {
         return NUNL_ESIZE;
@@ -115,12 +156,6 @@ nunl_result_t nunl_validate_image(const void *image,
         const nunl_memory_range_t *range = &memory_map[i];
         uint64_t range_end;
 
-        if (range->size == 0u || range->base > UINT64_MAX - range->size ||
-            range->reserved != 0u ||
-            range->type < (uint32_t)NUNL_MEMORY_USABLE_RAM ||
-            range->type > (uint32_t)NUNL_MEMORY_MMIO) {
-            return NUNL_EMEMORY;
-        }
         range_end = range->base + range->size;
         if (range->type == (uint32_t)NUNL_MEMORY_USABLE_RAM &&
             load_address >= range->base && load_address < range_end &&
@@ -149,6 +184,7 @@ const char *nunl_result_name(nunl_result_t result)
         case NUNL_EENTRY: return "invalid_entry";
         case NUNL_EMEMORY: return "invalid_memory_range";
         case NUNL_ECHECKSUM: return "header_checksum_mismatch";
+        case NUNL_EOVERLAP: return "overlapping_memory_ranges";
         default: return "unknown_result";
     }
 }

@@ -1,0 +1,13 @@
+{
+  "system": "NUN",
+  "source": "core/NUN",
+  "modules": [
+    {"id":"SAMBU","role":"Language, interpreter, CLI, IDE and developer workflows","boundary":"Python host tooling; not executed as kernel code"},
+    {"id":"ToolNG","role":"Native policy, evidence assessment and bounded workflows","boundary":"Fail-closed native policy core"},
+    {"id":"ReaperCripple","role":"Bootstrap, rollback, BSP adapters and telemetry","boundary":"Hardware access requires explicit platform adapters"},
+    {"id":"Kloz","role":"Platform ABI, arena memory and fixed resource budgets","boundary":"Caller-owned storage and versioned platform contract"},
+    {"id":"CO","role":"Deterministic component lifecycle","boundary":"No hidden heap or implicit scheduler"},
+    {"id":"SaintSI","role":"Health, heartbeat and integrity observations","boundary":"Observation only; no implicit watchdog or reset"},
+    {"id":"Klipot","role":"Ecosystem registry, contracts and integration planner","boundary":"Host-side control plane"}
+  ]
+}

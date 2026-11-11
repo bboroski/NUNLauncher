@@ -3,7 +3,7 @@ project(NUNLauncher VERSION 0.2.0 LANGUAGES C)
 
 include(CTest)
 
-add_library(NUNLauncher.Contract STATIC src/boot_contract.c)
+add_library(NUNLauncher.Contract STATIC src/boot_contract.c src/diagnostics.c)
 target_include_directories(NUNLauncher.Contract PUBLIC include)
 target_compile_features(NUNLauncher.Contract PUBLIC c_std_11)
 if(MSVC)
@@ -16,4 +16,8 @@ if(BUILD_TESTING)
     add_executable(NUNLauncher.ContractTests tests/test_boot_contract.c)
     target_link_libraries(NUNLauncher.ContractTests PRIVATE NUNLauncher.Contract)
     add_test(NAME nunlauncher_boot_contract COMMAND NUNLauncher.ContractTests)
+
+    add_executable(NUNLauncher.DiagnosticsTests tests/test_diagnostics.c)
+    target_link_libraries(NUNLauncher.DiagnosticsTests PRIVATE NUNLauncher.Contract)
+    add_test(NAME nunlauncher_diagnostics COMMAND NUNLauncher.DiagnosticsTests)
 endif()

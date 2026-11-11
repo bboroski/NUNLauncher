@@ -6,7 +6,7 @@
 
 ---
 
-**NUNLauncher определяет будущую узкую границу между firmware/bootloader и минимальным ядром NUN.** Его задача — проверить образ, сформировать контекст загрузки и передать управление через заданную точку входа.
+**NUNLauncher определяет будущую узкую границу между firmware/bootloader и минимальным ядром NUN.** Его задача — проверить образ, сформировать boot-контекст и передать управление через заданную точку входа.
 
 ## Предполагаемые функции
 
@@ -18,8 +18,6 @@
 - Явная фиксация ошибок до handoff без скрытого перехода в неизвестный режим.
 
 ## Текущий статус
-
-<badge>SPECIFICATION ONLY</badge>
 
 В репозитории пока нет launcher-кода, bootloader, конфигурации образа, build pipeline, тестов или bootable binary. Ни одна архитектура не подтверждена как поддерживаемая. Elbrus/E2K остаётся архитектурным направлением, а не квалифицированной платформой.
 
@@ -41,7 +39,7 @@
 
 ## Экосистема и лицензия
 
-Связанный kernel-проект: [NUN](https://github.com/bboroski/NUN). Инженерные компоненты экосистемы: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI) и [Klipot](https://github.com/bboroski/Klipot).
+Основной kernel-проект: [NUN](https://github.com/bboroski/NUN). Связанные компоненты: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI) и [Klipot](https://github.com/bboroski/Klipot).
 
 Файл <code>LICENSE</code> отсутствует; лицензия не объявлена. Определите условия до публичного распространения.
 

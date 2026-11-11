@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-HOST%20VALIDATOR-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-IMAGE%20CHECKER-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 
 ---
@@ -19,7 +19,16 @@
 
 ## Поточний стан
 
-У репозиторії наразі немає launcher-коду, bootloader, конфігурації образу, build pipeline, тестів або bootable binary. Підтримка жодної архітектури не підтверджена. Elbrus/E2K залишається напрямом архітектурної роботи, а не перевіреною платформою.
+Репозиторій містить host-side validator `tools/validate_boot_image.py` та unit tests, які перевіряють JSON-manifest, SHA-256, безпечний шлях до образу, межі пам'яті й вирівнювання entry point. Це **не bootloader**: architecture-specific startup/loader, linker script, повний build pipeline та bootable binary ще відсутні. Підтримка жодної архітектури не підтверджена; E2K допускається лише як експериментальна ціль перевірки метаданих.
+
+## Host-side перевірка образу
+
+```sh
+python tools/validate_boot_image.py path/to/kernel.manifest.json --target x86_64
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+Validator не завантажує та не виконує код. Перевірка manifest/digest не замінює bootloader, підпис образу, емуляцію чи тест на обладнанні.
 
 ## Контракт із NUN
 

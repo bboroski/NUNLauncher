@@ -3,6 +3,21 @@
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
 <p align="center"><strong>Portable C11 host validator · no firmware handoff</strong></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
+<sub>Updated: 2026-11-11</sub>
+
+
+## Contents
+
+- [Current capabilities](#current-capabilities)
+- [Quick start and verification](#quick-start-and-verification)
+- [Architecture and verified scope](#architecture-and-verified-scope)
+- [Interface and visual materials](#interface-and-visual-materials)
+- [Engineering quality](#engineering-quality)
+- [Documentation map](#documentation-map)
+- [NUN Mesh and related repositories](#nun-mesh-and-related-repositories)
+- [Design and documentation](#design-and-documentation)
+- [License](#license)
+- [Duck Black / Yellow palette](#duck-black-yellow-palette)
 
 > **NUNLauncher** — NUNLauncher defines the boundary between firmware/bootloader and the NUN kernel, validating kernel-image metadata ahead of a future handoff.
 
@@ -23,14 +38,26 @@ python one.py check
 ## Architecture and verified scope
 This is not yet a bootloader or bootable binary. Firmware entry, linker scripts, architecture handoff, secure signature chain and real emulator/hardware boot are not implemented. Host validation does not prove OS startup.
 
+## Interface and visual materials
+
+NUNLauncher is a host-side C11 validator for boot metadata, not a graphical application. No GUI screenshots are available; the image below shows only the shared Duck Black / Yellow documentation style.
+
+<p align="center"><img src="assets/duck-ui/duck-ui-preview.svg" alt="Shared Duck Black Yellow design system; not a NUNLauncher interface" width="960"></p>
+
 ## Engineering quality
 - Run the checks appropriate to the target platform; host CI is not hardware qualification.
 - Mark capabilities as implemented, partial or planned according to code, tests and evidence.
 - A mockup, specification or open pull request is not proof of a production-ready feature.
 - External integrations must be explicit, versioned, isolated and testable.
 
+## Documentation map
+
+- [Kernel image contract](docs/BOOT_IMAGE_CONTRACT.md)
+- [Ecosystem integration](docs/ECOSYSTEM_INTEGRATION.md)
+- [Engineering governance](docs/ENGINEERING_GOVERNANCE.md)
+
 ## NUN Mesh and related repositories
-[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN) · [NUNLauncher](https://github.com/bboroski/NUNLauncher) · [Fragile-Baby](https://github.com/bboroski/Fragile-Baby) · [Luci](https://github.com/bboroski/Luci)
+[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN) · [NUNLauncher](https://github.com/bboroski/NUNLauncher)
 
 Each repository retains its canonical name, code, APIs, release lifecycle and ownership boundaries. Integration means versioned contracts, not automatic merging of independent runtimes.
 

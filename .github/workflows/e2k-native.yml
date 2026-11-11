@@ -1,4 +1,4 @@
-name: NUNLauncher E2K native qualification
+name: NUNLauncher E2K native admission
 
 on:
   workflow_dispatch:
@@ -10,14 +10,42 @@ jobs:
   e2k-native:
     runs-on: [self-hosted, linux, e2k]
     steps:
-      - uses: actions/checkout@v4
-      - name: Verify E2K host and LCC
+      - name: Check out NUNLauncher
+        uses: actions/checkout@v4
+      - name: Verify E2K Linux runner and LCC
         run: |
           test "$(uname -m)" = "e2k"
+          python3 --version
           command -v lcc
           lcc --version
-      - name: Build and test with native LCC
+      - name: Build and test NUNLauncher C11 contracts
         run: |
           cmake -S . -B .build-e2k -DCMAKE_C_COMPILER=lcc -DBUILD_TESTING=ON
           cmake --build .build-e2k --parallel
           ctest --test-dir .build-e2k --output-on-failure
+      - name: Test NUNLauncher Python verifier
+        run: make test
+      - name: Check out pinned NUN E2K runtime source
+        uses: actions/checkout@v4
+        with:
+          repository: bboroski/NUN
+          ref: ae314deb44f334625c62623eb812d194ce92271c
+          path: .deps/NUN
+      - name: Build E2K runtime with vendor LCC
+        run: make -C .deps/NUN e2k-host
+      - name: Verify E2K ELF and manifest
+        run: |
+          PYTHONPATH=. python3 -m nunlauncher_boot.cli verify-e2k \
+            --binary .deps/NUN/build/e2k/NUN-E2K-host \
+            --manifest .deps/NUN/build/e2k/NUN-E2K-host.json \
+            --json | tee .deps/NUN/build/e2k/NUNLauncher-e2k-verification.json
+      - name: Execute native E2K runtime
+        run: make -C .deps/NUN e2k-host-test
+      - name: Upload E2K runtime and verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: NUNLauncher-E2K-native-runtime
+          path: |
+            .deps/NUN/build/e2k/NUN-E2K-host
+            .deps/NUN/build/e2k/NUN-E2K-host.json
+            .deps/NUN/build/e2k/NUNLauncher-e2k-verification.json

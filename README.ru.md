@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><strong>Переносимый C11 host validator · без firmware handoff</strong></p>
+<p align="center"><strong>Допуск образа перед загрузкой · unsigned</strong></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 <sub>Обновлено: 2026-11-11</sub>
 
@@ -33,10 +33,15 @@ cmake -S . -B build
 cmake --build build --config Release
 ctest --test-dir build --output-on-failure
 python one.py check
+make test
 ```
 
+Проверка собранного NUN ISO: `make verify IMAGE=../NUN/build/NUN.iso MANIFEST=../NUN/build/NUN.image.json`.
+
 ## Архитектура и подтверждённые границы
-Это ещё не bootloader и не bootable binary. Firmware entry, linker scripts, architecture handoff, secure signature chain и реальные emulator/hardware boot не реализованы. Host validation не доказывает запуск ОС.
+NUNLauncher — host-side слой допуска образа перед запуском: он проверяет собранный NUN ISO, но не заменяет firmware или Limine, не передаёт управление ядру и не выполняет код образа. CI отдельно запускает тот же образ в QEMU через BIOS и x86_64 UEFI. Host preflight сам по себе не доказывает совместимость с произвольным физическим оборудованием.
+
+Secure Boot, подпись издателя, ротация ключей и TPM attestation не реализованы. Текущий manifest явно отмечает образ как unsigned; SHA-256 подтверждает соответствие manifest, а не личность издателя.
 
 ## Интерфейс и визуальные материалы
 
@@ -51,7 +56,15 @@ python tools/validate_boot_image.py path/to/kernel.manifest.json --target x86_64
 python -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-Validator не загружает и не исполняет код. Проверка подписи, запуск в эмуляторе и квалификация на физическом оборудовании остаются отдельными этапами.
+Validator не загружает и не исполняет код. Проверка подписи и квалификация на физическом оборудовании остаются отдельными этапами.
+
+## NUN boot-image supervisor
+
+Команда `make verify IMAGE=../NUN/build/NUN.iso MANIFEST=../NUN/build/NUN.image.json` запускает полный pre-handoff процесс: manifest/schema, имя и размер ISO, SHA-256, BIOS/UEFI El Torito entries, ELF64 x86_64 kernel и AMD64 EFI fallback loader. Проверка выполняется только на чтение; запись на диск и передача управления ядру не происходят.
+
+`make test` запускает host-тесты supervisor. CI собирает NUN из закреплённого commit и запускает тот же ISO в QEMU через BIOS и x86_64 UEFI. Это подтверждает начальный boot path в этих эмуляторных профилях, а не готовность полноценной ОС или физическую аппаратную квалификацию.
+
+Отдельная команда `verify-e2k` проверяет структуру E2K Linux userspace ELF (`EM_MCST_ELBRUS=175`) и manifest. Это не bare-metal E2K bootloader/kernel. Нативный запуск выделен в отдельный ручной workflow на self-hosted E2K runner.
 
 <p align="center"><img src="assets/duck-ui/duck-ui-preview.svg" alt="Общая дизайн-система Duck Black Yellow; не интерфейс NUNLauncher" width="960"></p>
 
@@ -64,6 +77,8 @@ Validator не загружает и не исполняет код. Прове�
 ## Карта документации
 
 - [Контракт образа ядра](docs/BOOT_IMAGE_CONTRACT.md)
+- [Boot-image supervisor и модель доверия](docs/BOOT_SUPERVISOR.md)
+- [E2K Linux userspace admission](docs/E2K_RUNTIME.md)
 - [Интеграция экосистемы](docs/ECOSYSTEM_INTEGRATION.md)
 - [Инженерное управление](docs/ENGINEERING_GOVERNANCE.md)
 

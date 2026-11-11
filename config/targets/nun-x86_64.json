@@ -1,0 +1,21 @@
+{
+  "profile_version": 1,
+  "product": "NUN",
+  "architecture": "x86_64",
+  "firmware": ["bios", "uefi"],
+  "boot_protocol": "limine",
+  "limine_base_revision": 6,
+  "kernel": {
+    "format": "ELF64",
+    "endianness": "little",
+    "machine": "x86_64",
+    "type": "ET_DYN"
+  },
+  "policy": {
+    "fail_closed": true,
+    "require_both_firmware_entries": true,
+    "require_efi_amd64": true,
+    "require_executable_kernel_entry": true,
+    "publisher_signature": "not_implemented"
+  }
+}

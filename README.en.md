@@ -19,7 +19,7 @@
 
 ## Current status
 
-The repository currently contains no launcher code, bootloader, image configuration, build pipeline, tests, or bootable binary. No architecture is verified as supported. Elbrus/E2K remains an architecture workstream, not a qualified target.
+The repository now contains a portable C11 host-side validator for the 48-byte kernel-image header, architecture match, entry offset, and load-span containment in a caller-supplied memory map. A CMake build, unit tests, and GCC/Clang CI are included. This is **not yet a bootloader or bootable binary**: firmware entry code, linker scripts, architecture handoff, a secure signature chain, and emulator/hardware boot tests remain unimplemented. The manual E2K workflow is prepared but requires a self-hosted runner with LCC; it is not evidence of qualified support.
 
 ## NUN contract
 

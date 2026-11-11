@@ -53,7 +53,7 @@ class BootManifestTests(unittest.TestCase):
     def test_path_traversal_is_rejected(self) -> None:
         self.data["image"] = "../outside.bin"
         self.write_manifest()
-        with self.assertRaisesRegex(ManifestError, "relative path"):
+        with self.assertRaisesRegex(ManifestError, "manifest directory"):
             validate_manifest(self.manifest)
 
     def test_entry_outside_memory_region_is_rejected(self) -> None:

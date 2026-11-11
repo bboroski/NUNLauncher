@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NUN E2K Linux Runtime Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "product", "artifact", "target", "binary", "compiler", "security", "build"],
+  "properties": {
+    "schema_version": {"const": "nun.e2k.runtime.v1"},
+    "product": {"const": "NUN"},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "size_bytes", "sha256"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["architecture", "os", "word_bits", "endianness", "elf_machine", "execution_mode", "deployment_chain"],
+      "properties": {
+        "architecture": {"const": "e2k"},
+        "os": {"const": "linux"},
+        "word_bits": {"const": 64},
+        "endianness": {"const": "little"},
+        "elf_machine": {"const": 175},
+        "execution_mode": {"const": "native-linux-userspace"},
+        "deployment_chain": {"const": "MCST-PNS-to-Elbrus-Linux-to-NUN-userspace"}
+      }
+    },
+    "binary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "endianness", "machine", "e_machine", "type", "entry_point"],
+      "properties": {
+        "format": {"const": "ELF64"},
+        "endianness": {"const": "little"},
+        "machine": {"const": "EM_MCST_ELBRUS"},
+        "e_machine": {"const": 175},
+        "type": {"enum": ["ET_EXEC", "ET_DYN"]},
+        "entry_point": {"type": "string", "pattern": "^0x[0-9a-f]+$"}
+      }
+    },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "version"],
+      "properties": {
+        "family": {"const": "LCC"},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digest_algorithm", "signature_status"],
+      "properties": {
+        "digest_algorithm": {"const": "sha256"},
+        "signature_status": {"const": "unsigned"}
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_commit"],
+      "properties": {"source_commit": {"type": "string", "minLength": 1}}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NUNLauncher</string>
+    <string name="brand_title">NUN</string>
+    <string name="brand_subtitle">LAUNCHER / ANDROID HOME</string>
+    <string name="search_hint">Search installed apps</string>
+    <string name="search_accessibility">Search installed applications</string>
+    <string name="core_disconnected">NUN core: not connected · Android host mode</string>
+    <string name="app_discovery_restricted">App discovery is restricted by Android</string>
+    <string name="app_discovery_failed">Could not read the app list</string>
+    <string name="app_count">%1$d applications</string>
+    <string name="no_apps_available">No launchable applications are visible to this profile.</string>
+    <string name="no_search_matches">No applications match this search.</string>
+    <string name="launch_app_accessibility">Launch %1$s</string>
+    <string name="app_no_longer_available">This application is no longer available.</string>
+    <string name="app_launch_denied">Android denied this launch request.</string>
+    <string name="app_launch_failed">Could not start this application.</string>
+    <string name="favorite_added">Added to favorites</string>
+    <string name="favorite_removed">Removed from favorites</string>
+</resources>

@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-HOST%20VALIDATOR-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-NO%20FIRMWARE%20HANDOFF-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 
 ---
@@ -19,7 +19,7 @@
 
 ## Поточний стан
 
-У репозиторії наразі немає launcher-коду, bootloader, конфігурації образу, build pipeline, тестів або bootable binary. Підтримка жодної архітектури не підтверджена. Elbrus/E2K залишається напрямом архітектурної роботи, а не перевіреною платформою.
+У репозиторії тепер є переносимий C11 host-side validator для 48-байтового заголовка kernel image, перевірки архітектури, entry offset і меж завантаження в caller-provided memory map. Є CMake build, тести та GCC/Clang CI. Це **ще не bootloader і не bootable binary**: firmware entry, linker scripts, architecture handoff, secure signature chain та emulator/hardware boot tests ще не реалізовані. Ручний E2K workflow лише підготовлений і потребує self-hosted runner з LCC; він не є доказом кваліфікованої підтримки.
 
 ## Контракт із NUN
 

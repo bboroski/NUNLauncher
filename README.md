@@ -1,7 +1,9 @@
 <!-- Title: NUNLauncher — C11 kernel image boot contract validator -->
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="Логотип NUNLauncher" width="76"></p>
 
-# NUNLauncher — C11 validator контракту образу ядра
+# NUNLauncher
+
+> **Visual identity:** Duck Black / Yellow — accent `#FFD600`, primary ink `#111111`.
 
 [![CI](https://github.com/bboroski/NUNLauncher/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bboroski/NUNLauncher/actions/workflows/ci.yml)
 

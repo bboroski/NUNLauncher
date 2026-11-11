@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-HOST%20VALIDATOR-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-IMAGE%20CHECKER-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 
 ---
@@ -19,7 +19,16 @@
 
 ## Текущий статус
 
-В репозитории пока нет launcher-кода, bootloader, конфигурации образа, build pipeline, тестов или bootable binary. Ни одна архитектура не подтверждена как поддерживаемая. Elbrus/E2K остаётся архитектурным направлением, а не квалифицированной платформой.
+В репозитории появился host-side validator (`tools/validate_boot_image.py`) и unit tests для проверки JSON-manifest, SHA-256, безопасного пути к образу, границ памяти и выравнивания entry point. Это **не bootloader**: architecture-specific startup/loader, linker script, полный boot pipeline и bootable binary пока отсутствуют. Ни одна архитектура не квалифицирована; E2K допускается только как экспериментальная цель проверки метаданных.
+
+## Host-side проверка образа
+
+```sh
+python tools/validate_boot_image.py path/to/kernel.manifest.json --target x86_64
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+Validator не загружает и не исполняет код. Проверка manifest/digest не заменяет bootloader, проверку подписи образа, тестирование в эмуляторе или квалификацию на физическом оборудовании.
 
 ## Контракт NUN
 

@@ -47,8 +47,13 @@ typedef enum nunl_result {
     NUNL_ESIZE = -5,
     NUNL_EENTRY = -6,
     NUNL_EMEMORY = -7,
-    NUNL_ECHECKSUM = -8
+    NUNL_ECHECKSUM = -8,
+    NUNL_EOVERLAP = -9
 } nunl_result_t;
+
+/* Validate bounded, non-overlapping memory ranges. Adjacent ranges are allowed. */
+nunl_result_t nunl_validate_memory_map(const nunl_memory_range_t *memory_map,
+                                       size_t memory_map_count);
 
 /* CRC-32/ISO-HDLC over the fixed 48-byte header with its CRC field zeroed. */
 uint32_t nunl_image_header_crc32(const void *header_bytes, size_t header_length);

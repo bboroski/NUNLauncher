@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-SPECIFICATION%20ONLY-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-DOCUMENTATION%20SCAFFOLD-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-HOST%20VALIDATOR-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-IMAGE%20CHECKER-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 
 ---
@@ -19,7 +19,16 @@
 
 ## Current status
 
-The repository currently contains no launcher code, bootloader, image configuration, build pipeline, tests, or bootable binary. No architecture is verified as supported. Elbrus/E2K remains an architecture workstream, not a qualified target.
+The repository now contains a host-side validator (`tools/validate_boot_image.py`) and unit tests for the JSON manifest, SHA-256 digest, safe image path, memory bounds, and entry alignment. This is **not a bootloader**: architecture-specific startup/loader code, a linker script, a complete boot pipeline, and a bootable binary are still absent. No architecture is qualified; E2K is accepted only as an experimental metadata-validation target.
+
+## Host-side image validation
+
+```sh
+python tools/validate_boot_image.py path/to/kernel.manifest.json --target x86_64
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+The validator does not load or execute code. Manifest/digest validation does not replace a bootloader, image signature verification, emulator testing, or physical-target qualification.
 
 ## NUN contract
 

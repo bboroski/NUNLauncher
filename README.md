@@ -43,3 +43,8 @@ python one.py check
 
 ---
 **Створено з любов'ю до інженерії, системності та людей.**
+
+
+## Майбутній GUI та внесок
+
+NUNLauncher поки описує bootstrap/handoff-контракти, а не завершений GUI або перевірену реалізацію bootloader. Вимоги до майбутнього host-інструмента та межі доказів: [GUI Design Standard](docs/gui/GUI_DESIGN_STANDARD.md). Макетні статуси не є результатом boot-перевірки. Шаблон PR: [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md).

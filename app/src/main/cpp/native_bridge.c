@@ -19,32 +19,32 @@ static union {
     unsigned char bytes[NUN_ANDROID_ARENA_SIZE];
 } g_arena;
 
-static pbsc_status_t android_monotonic_ticks(void *context, uint64_t *ticks_out)
+static kloz_status_t android_monotonic_ticks(void *context, uint64_t *ticks_out)
 {
     struct timespec now;
     (void)context;
     if (ticks_out == NULL || clock_gettime(CLOCK_MONOTONIC, &now) != 0) {
-        return PBSC_EINVAL;
+        return KLOZ_EINVAL;
     }
     *ticks_out = ((uint64_t)now.tv_sec * UINT64_C(1000)) +
                  ((uint64_t)now.tv_nsec / UINT64_C(1000000));
-    return PBSC_OK;
+    return KLOZ_OK;
 }
 
-static dlo_result_t android_host_init(void *context)
+static co_result_t android_host_init(void *context)
 {
     nun_android_host_t *host = (nun_android_host_t *)context;
-    if (host == NULL) return DLO_EINVAL;
+    if (host == NULL) return CO_EINVAL;
     host->completed_steps = 0u;
-    return DLO_OK;
+    return CO_OK;
 }
 
-static dlo_result_t android_host_step(void *context)
+static co_result_t android_host_step(void *context)
 {
     nun_android_host_t *host = (nun_android_host_t *)context;
-    if (host == NULL) return DLO_EINVAL;
+    if (host == NULL) return CO_EINVAL;
     if (host->completed_steps < UINT64_MAX) ++host->completed_steps;
-    return DLO_OK;
+    return CO_OK;
 }
 
 static void android_host_shutdown(void *context)
@@ -54,8 +54,8 @@ static void android_host_shutdown(void *context)
 
 JNIEXPORT jint JNICALL Java_com_nun_launcher_NunCore_nativeStart(JNIEnv *env, jclass type)
 {
-    pbsc_platform_ops_t platform;
-    dlo_hooks_t hooks;
+    kloz_platform_ops_t platform;
+    co_hooks_t hooks;
     nun_runtime_config_t config;
     nun_result_t result;
     (void)env;
@@ -63,9 +63,9 @@ JNIEXPORT jint JNICALL Java_com_nun_launcher_NunCore_nativeStart(JNIEnv *env, jc
 
     if (g_initialized) return NUN_OK;
 
-    platform.abi_version = PBSC_ABI_VERSION;
+    platform.abi_version = KLOZ_ABI_VERSION;
     platform.struct_size = (uint32_t)sizeof(platform);
-    platform.capabilities = PBSC_PLATFORM_CAP_MONOTONIC_CLOCK;
+    platform.capabilities = KLOZ_PLATFORM_CAP_MONOTONIC_CLOCK;
     platform.context = NULL;
     platform.ticks_read = android_monotonic_ticks;
     platform.irq_save = NULL;

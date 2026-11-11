@@ -1,48 +1,45 @@
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
-<p align="center"><img src="https://img.shields.io/badge/STATUS-HOST%20VALIDATOR-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/IMPLEMENTATION-NO%20FIRMWARE%20HANDOFF-FFD600?style=for-the-badge&labelColor=111111"><img src="https://img.shields.io/badge/LICENSE-NOT%20DECLARED-FFD600?style=for-the-badge&labelColor=111111"></p>
+<p align="center"><img src="https://img.shields.io/badge/STATUS-PORTABLE%20C11%20HOST%20VALIDATOR%20%C2%B7%20NO%20FIRMWARE%20HANDOFF-FFD600?style=for-the-badge&labelColor=111111" alt="Portable C11 host validator · no firmware handoff"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
 
----
+> **NUNLauncher** — NUNLauncher визначає вузьку межу між firmware/bootloader та ядром NUN і перевіряє kernel-image metadata перед майбутнім handoff.
 
-**NUNLauncher визначає майбутню вузьку межу між firmware/bootloader та мінімальним ядром NUN.** Його задача — перевірити образ, сформувати контекст і передати керування через визначений entry point.
+## Поточні можливості
+- Host-side validator 48-byte kernel-image header.
+- Перевірка architecture, entry offset і меж завантаження в caller-provided memory map.
+- Portable CMake build, host tests та GCC/Clang CI.
+- Versioned boot-information contract і capability-gate design.
+- Окремі readiness gates для emulator та hardware handoff.
 
-## Цільові функції
+## Швидкий старт і перевірка
+```bash
+cmake -S . -B build
+cmake --build build --config Release
+ctest --test-dir build --output-on-failure
+python one.py check
+```
 
-- Перевірка формату та версії kernel image.
-- Валідація memory map, alignment і допустимих діапазонів адрес.
-- Перевірка потрібних platform capabilities.
-- Формування версійованого boot-information block.
-- Передача керування через architecture entry point.
-- Явна фіксація помилки до handoff без прихованого переходу в невідомий режим.
+## Архітектура, межі та достовірність
+Це ще не bootloader і не bootable binary: firmware entry, linker scripts, architecture handoff, secure signature chain та реальний emulator/hardware boot не реалізовані. Host validation не доводить запуск ОС.
 
-## Поточний стан
+## Інженерна якість
+- Перевіряйте збірку й тести саме для цільової платформи; host CI не замінює hardware qualification.
+- Статуси **implemented**, **partial**, **planned** мають підтверджуватися кодом, тестами та документацією.
+- Не оголошуйте функцію production-ready лише на підставі макета, специфікації чи відкритого Pull Request.
+- Зовнішні інтеграції мають бути явними, версіонованими, ізольованими й перевірюваними.
 
-У репозиторії тепер є переносимий C11 host-side validator для 48-байтового заголовка kernel image, перевірки архітектури, entry offset і меж завантаження в caller-provided memory map. Є CMake build, тести та GCC/Clang CI. Це **ще не bootloader і не bootable binary**: firmware entry, linker scripts, architecture handoff, secure signature chain та emulator/hardware boot tests ще не реалізовані. Ручний E2K workflow лише підготовлений і потребує self-hosted runner з LCC; він не є доказом кваліфікованої підтримки.
+## NUN Mesh та пов'язані репозиторії
+[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN) · [NUNLauncher](https://github.com/bboroski/NUNLauncher) · [Fragile-Baby](https://github.com/bboroski/Fragile-Baby) · [Luci](https://github.com/bboroski/Luci)
 
-## Контракт із NUN
+Репозиторії зберігають власні назви, код, API, цикли випуску та межі відповідальності. Інтеграція означає узгоджені контракти, а не автоматичне злиття незалежних runtime.
 
-[NUN](https://github.com/bboroski/NUN) має самостійно перевірити handoff-контекст перед ініціалізацією. NUNLauncher відповідає лише за валідацію образу, формування boot-information block і контроль переходу. Менеджер пам'яті, scheduler і драйвери належать ядру.
+## Дизайн і документація
+Базовий інтерфейсний напрям екосистеми — **Duck Black / Yellow**: чорні поверхні, жовтий акцент для дій і станів, читабельна типографіка, доступний контраст, клавіатурна навігація та підтримка reduced motion. Деталі дивіться в [design/DUCK_UI_SYSTEM.md](design/DUCK_UI_SYSTEM.md), якщо файл присутній у цьому репозиторії.
 
-## План реалізації
-
-| Етап | Доказ готовності |
-|---|---|
-| Image contract | Формат, версія, checksum і сумісність визначені |
-| Memory validation | Boundary, alignment та address-range тести проходять |
-| Capability gate | Невідповідна платформа відхиляється до handoff |
-| Boot information | Handoff-структура версіонована й перевіряється ядром |
-| Handoff | Entry point перевірений в емуляторі та на цільовій платформі |
-
-Помилка до handoff має бути явною. Невідомий режим не повинен запускатися приховано. Host-тести не є доказом реального boot на процесорі або платі.
-
-## Екосистема та ліцензія
-
-Основний kernel-проєкт: [NUN](https://github.com/bboroski/NUN). Суміжні компоненти: [Kloz](https://github.com/bboroski/Kloz), [CO](https://github.com/bboroski/CO), [SaintSI](https://github.com/bboroski/SaintSI) та [Klipot](https://github.com/bboroski/Klipot).
-
-Файл <code>LICENSE</code> відсутній; ліцензію не оголошено. Визначте умови до публічного розповсюдження.
+## Ліцензія
+Ліцензію не оголошено; файл LICENSE відсутній.
 
 ---
-
-**Створено з любов'ю до системної інженерії та людей.**
+**Створено з любов'ю до інженерії, системності та людей.**

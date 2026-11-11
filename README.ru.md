@@ -42,6 +42,17 @@ python one.py check
 
 NUNLauncher — host-side валидатор метаданных загрузки на C11, а не графическое приложение. Скриншотов GUI нет; изображение ниже показывает только общий стиль документации Duck Black / Yellow.
 
+## Проверка образа на host
+
+`tools/validate_boot_image.py` проверяет JSON-manifest, SHA-256, безопасный путь к образу, границы памяти и выравнивание entry point. Это проверка метаданных, а не bootloader и не подтверждение поддержки архитектуры.
+
+```sh
+python tools/validate_boot_image.py path/to/kernel.manifest.json --target x86_64
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+Validator не загружает и не исполняет код. Проверка подписи, запуск в эмуляторе и квалификация на физическом оборудовании остаются отдельными этапами.
+
 <p align="center"><img src="assets/duck-ui/duck-ui-preview.svg" alt="Общая дизайн-система Duck Black Yellow; не интерфейс NUNLauncher" width="960"></p>
 
 ## Инженерное качество

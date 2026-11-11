@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from validate_boot_image import ManifestError, validate_manifest
 
 
@@ -13,9 +15,8 @@ class BootManifestTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
-        self.image = self.root / "kernel.bin"
         self.payload = b"NUN test kernel image"
-        self.image.write_bytes(self.payload)
+        (self.root / "kernel.bin").write_bytes(self.payload)
         self.manifest = self.root / "kernel.manifest.json"
         self.data = {
             "format": "nun.kernel-image",

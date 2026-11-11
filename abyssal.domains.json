@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "repository": "bboroski/NUNLauncher",
+  "role": "Host-side NUN boot-image admission and pre-handoff verification",
+  "maturity": "host-tested verifier with x86_64 BIOS/UEFI QEMU boot evidence; no bare-metal E2K kernel",
+  "domains": {
+    "lucifer": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "beelzebub": {
+      "status": "planned",
+      "evidence": []
+    },
+    "leviathan": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "asmodeus": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "belphegor": {
+      "status": "planned",
+      "evidence": []
+    },
+    "mammon": {
+      "status": "planned",
+      "evidence": []
+    },
+    "satan": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "belial": {
+      "status": "planned",
+      "evidence": []
+    },
+    "astaroth": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "baal": {
+      "status": "planned",
+      "evidence": []
+    },
+    "adramelech": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "ariel": {
+      "status": "planned",
+      "evidence": []
+    },
+    "pazuzu": {
+      "status": "partial",
+      "evidence": [
+        "README.md"
+      ]
+    }
+  },
+  "integrations": [
+    {
+      "repository": "bboroski/NUN",
+      "relation": "contract",
+      "status": "partial"
+    },
+    {
+      "repository": "bboroski/Kloz",
+      "relation": "adapter",
+      "status": "planned"
+    }
+  ]
+}

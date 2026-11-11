@@ -19,7 +19,7 @@
 
 ## Текущий статус
 
-В репозитории пока нет launcher-кода, bootloader, конфигурации образа, build pipeline, тестов или bootable binary. Ни одна архитектура не подтверждена как поддерживаемая. Elbrus/E2K остаётся архитектурным направлением, а не квалифицированной платформой.
+В репозитории теперь есть переносимый C11 host-side validator для 48-байтового заголовка kernel image, проверки архитектуры, entry offset и размещения образа внутри переданной memory map. Добавлены CMake-сборка, unit-тесты и GCC/Clang CI. Это **пока не bootloader и не bootable binary**: firmware entry, linker scripts, architecture handoff, цепочка криптографической подписи и emulator/hardware boot tests ещё не реализованы. Ручной E2K workflow подготовлен, но требует self-hosted runner с LCC и не доказывает квалифицированную поддержку.
 
 ## Контракт NUN
 

@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFormLayout>
+#include <QFont>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QLabel>

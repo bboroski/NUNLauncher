@@ -20,8 +20,8 @@ set_target_properties(NUNLauncher.Desktop PROPERTIES
 )
 target_compile_features(NUNLauncher.Desktop PRIVATE cxx_std_17)
 target_compile_definitions(NUNLauncher.Desktop PRIVATE
-    NUNLAUNCHER_VERSION="\${PROJECT_VERSION}"
-    NUNLAUNCHER_SOURCE_DIR="\${PROJECT_SOURCE_DIR}"
+    NUNLAUNCHER_VERSION="${PROJECT_VERSION}"
+    NUNLAUNCHER_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
 )
 target_link_libraries(NUNLauncher.Desktop PRIVATE Qt6::Widgets)
 

@@ -20,7 +20,26 @@ implement every entry. Select tools that directly advance the NUN roadmap.
 | **NUN Trace Studio** | Search and correlate serial traces, faults, boot stages and timing | Stable trace/event formats |
 | **NUN Device Matrix** | Hardware inventory, driver capability coverage and qualification evidence | HAL/device capability descriptors |
 | **NUN Package Desk** | Inspect, stage, verify, install and roll back signed packages | Package format, trust store and transactional updater |
-| **NUN System Settings** | Native settings for devices, display, input, networking and users | Userland services and stable system APIs |
+
+## Native NUN desktop applications (future OS userland)
+
+These applications are intended to run inside NUN after the operating system
+has the required user-space services and stable APIs. They are not host tools
+and are not part of the first Workbench increment.
+
+| Product | Responsibility | Required OS capability gate |
+|---|---|---|
+| **NUN Shell** | Native terminal, command execution, jobs and interactive sessions | Init, process lifecycle, syscall ABI, console and input |
+| **NUN Files** | File manager, search, permissions, mount view and removable media | VFS, file descriptors, filesystem drivers and permission model |
+| **NUN System Monitor** | Process/thread view, memory, CPU, interrupt and device telemetry | Scheduler, process introspection, memory statistics and trace APIs |
+| **NUN Network Desk** | Network interfaces, addressing, routes, DNS and connection diagnostics | Network stack, socket API and network device drivers |
+| **NUN Control Center** | Display, keyboard, pointer, audio, device and user preferences | Device services, input stack, display/compositor and user/session APIs |
+| **NUN Software Center** | Package discovery, signature checks, installation, updates and rollback | Signed package format, publisher trust store and transactional updater |
+
+Native applications must consume versioned public OS APIs. They must not access
+kernel internals, physical addresses or device registers directly. Until these
+gates exist, the corresponding products remain architecture and interface
+targets only; host-side simulators or mock data must be labelled explicitly.
 
 ## Shared foundation
 

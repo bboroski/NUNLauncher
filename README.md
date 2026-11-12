@@ -46,19 +46,12 @@ Secure Boot, підпис видавця, ротація ключів та TPM a
 
 ## Desktop Workbench
 
-**NUN Workbench** — optional Qt 6 Widgets desktop application for host-side
-NUN development. It unifies workspace selection, existing NUN build commands,
-host tests, read-only image verification through the NUNLauncher validator,
-and the current QEMU bring-up script.
+**NUN Workbench** — необов’язковий десктопний застосунок на Qt 6 Widgets для розробки NUN у host-середовищі. Він об’єднує вибір робочого каталогу, наявні команди збирання NUN, host-тести, read-only перевірку ISO та маніфесту через валідатор NUNLauncher і запуск поточного сценарію QEMU bring-up.
 
-The Workbench is not a GUI running inside the NUN kernel and does not imply
-that NUN already has userspace, VFS, networking, graphics drivers or a desktop
-environment. The GUI is an optional target; the existing C11 contract library
-and tests remain independent of Qt.
+Застосунок працює на хостовій ОС і не є графічною оболонкою ядра NUN. Його наявність не означає, що в NUN уже реалізовано userspace, VFS, мережу, графічні драйвери або desktop environment. Qt 6 — необов’язкова ціль; наявні C11-бібліотека контрактів і тести залишаються незалежними від Qt.
 
-Build instructions, scope and safety boundaries:
-- [NUN Workbench](docs/DESKTOP_WORKBENCH.md)
-- [Desktop application roadmap](docs/DESKTOP_APPLICATION_ROADMAP.md)
+- [Інструкція NUN Workbench](docs/DESKTOP_WORKBENCH.md)
+- [План desktop-застосунків](docs/DESKTOP_APPLICATION_ROADMAP.md)
 
 ## Перевірка образу на host
 

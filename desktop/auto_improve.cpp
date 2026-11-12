@@ -176,26 +176,30 @@ private:
         QFile adapterFile(QDir(path).filePath(QStringLiteral("ecosystem/auto-improvement.json")));
         if (adapterFile.open(QIODevice::ReadOnly)) {
             adapterFound = true;
-            const QByteArray adapterBytes = adapterFile.readAll();
-            adapterDigest = hashText(adapterBytes);
-            QJsonParseError parseError;
-            const QJsonDocument adapterDocument = QJsonDocument::fromJson(adapterBytes, &parseError);
-            if (parseError.error == QJsonParseError::NoError && adapterDocument.isObject()) {
-                const QJsonObject adapter = adapterDocument.object();
-                adapterRepository = adapter.value(QStringLiteral("repository")).toString();
-                const bool schemaOk = adapter.value(QStringLiteral("schema")).toString()
-                    == QStringLiteral("nun.auto-improvement.repository.v1");
-                const bool capabilitiesOk = adapter.value(QStringLiteral("capabilities")).isArray()
-                    && !adapter.value(QStringLiteral("capabilities")).toArray().isEmpty();
-                adapterValid = schemaOk && !adapterRepository.isEmpty() && capabilitiesOk;
-                adapterStatus = adapterValid
-                    ? QStringLiteral("adapter=valid; domain=%1; role=%2; capabilities=%3")
-                        .arg(adapter.value(QStringLiteral("domain")).toString(),
-                             adapter.value(QStringLiteral("role")).toString())
-                        .arg(adapter.value(QStringLiteral("capabilities")).toArray().size())
-                    : QStringLiteral("adapter=invalid; schema, repository or capabilities field is missing/invalid");
+            if (adapterFile.size() > 1024 * 1024) {
+                adapterStatus = QStringLiteral("adapter=invalid; manifest exceeds 1 MiB safety limit");
             } else {
-                adapterStatus = QStringLiteral("adapter=invalid JSON; %1").arg(parseError.errorString());
+                const QByteArray adapterBytes = adapterFile.readAll();
+                adapterDigest = hashText(adapterBytes);
+                QJsonParseError parseError;
+                const QJsonDocument adapterDocument = QJsonDocument::fromJson(adapterBytes, &parseError);
+                if (parseError.error == QJsonParseError::NoError && adapterDocument.isObject()) {
+                    const QJsonObject adapter = adapterDocument.object();
+                    adapterRepository = adapter.value(QStringLiteral("repository")).toString();
+                    const bool schemaOk = adapter.value(QStringLiteral("schema")).toString()
+                        == QStringLiteral("nun.auto-improvement.repository.v1");
+                    const bool capabilitiesOk = adapter.value(QStringLiteral("capabilities")).isArray()
+                        && !adapter.value(QStringLiteral("capabilities")).toArray().isEmpty();
+                    adapterValid = schemaOk && !adapterRepository.isEmpty() && capabilitiesOk;
+                    adapterStatus = adapterValid
+                        ? QStringLiteral("adapter=valid; domain=%1; role=%2; capabilities=%3")
+                            .arg(adapter.value(QStringLiteral("domain")).toString(),
+                                 adapter.value(QStringLiteral("role")).toString())
+                            .arg(adapter.value(QStringLiteral("capabilities")).toArray().size())
+                        : QStringLiteral("adapter=invalid; schema, repository or capabilities field is missing/invalid");
+                } else {
+                    adapterStatus = QStringLiteral("adapter=invalid JSON; %1").arg(parseError.errorString());
+                }
             }
         }
         evidenceLines << adapterStatus;

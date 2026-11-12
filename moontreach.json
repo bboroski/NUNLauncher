@@ -1,0 +1,105 @@
+{
+  "schema_version": "moontreach.repository.v1",
+  "repository": "bboroski/NUNLauncher",
+  "always_run": [
+    "repo-check"
+  ],
+  "fallback_on_unmapped": true,
+  "full_suite_on_merge_group": true,
+  "max_changed_files": 250,
+  "commands": {
+    "configure": {
+      "argv": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build/moontreach",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "timeout_seconds": 900
+    },
+    "build": {
+      "argv": [
+        "cmake",
+        "--build",
+        "build/moontreach",
+        "--parallel"
+      ],
+      "timeout_seconds": 1200
+    },
+    "ctest": {
+      "argv": [
+        "ctest",
+        "--test-dir",
+        "build/moontreach",
+        "--output-on-failure"
+      ],
+      "timeout_seconds": 1200
+    },
+    "repo-check": {
+      "argv": [
+        "python",
+        "one.py",
+        "check"
+      ],
+      "timeout_seconds": 900
+    },
+    "make-tests": {
+      "argv": [
+        "make",
+        "test"
+      ],
+      "timeout_seconds": 900
+    }
+  },
+  "rules": [
+    {
+      "id": "native-validator",
+      "paths": [
+        "**/*.c",
+        "**/*.h",
+        "**/*.cpp",
+        "**/*.hpp",
+        "**/*.S",
+        "**/*.s",
+        "**/*.cmake",
+        "**/CMakeLists.txt",
+        "CMakeLists.txt",
+        "Makefile",
+        "**/Makefile",
+        "**/*.ld",
+        "**/*.mk",
+        "**/*.json",
+        "**/*.py",
+        "one.py"
+      ],
+      "checks": [
+        "configure",
+        "build",
+        "ctest",
+        "repo-check",
+        "make-tests"
+      ]
+    },
+    {
+      "id": "docs-and-workflows",
+      "paths": [
+        "docs/**",
+        "README*",
+        ".github/**",
+        "moontreach.json"
+      ],
+      "checks": [
+        "repo-check"
+      ]
+    }
+  ],
+  "fallback_checks": [
+    "configure",
+    "build",
+    "ctest",
+    "repo-check",
+    "make-tests"
+  ]
+}

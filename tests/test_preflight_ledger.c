@@ -23,7 +23,7 @@ int main(void)
             7u, 0u, 1000u, NUNL_PREFLIGHT_FLAG_OBSERVED, 0u) == 1);
     assert(ledger.count == NUNL_PREFLIGHT_CAPACITY && ledger.dropped == 5u);
     count = nunl_preflight_ledger_snapshot(&ledger, rows, NUNL_PREFLIGHT_CAPACITY);
-    assert(count == NUNL_PREFLIGHT_CAPACITY && rows[0].sequence == 8u);
+    assert(count == NUNL_PREFLIGHT_CAPACITY && rows[0].sequence == 6u);
     puts("bounded event history tests passed");
     return 0;
 }

@@ -99,3 +99,8 @@ Validator не завантажує й не виконує код. Переві�
 ## Федерація Hellduck
 
 Цей репозиторій входить до федерації [Hellduck](https://github.com/bboroski/Hellduck) — спільного каталогу проєктів, контрактних зв’язків і станів інтеграції. Вихідний код, API, тести та цикл випуску залишаються відповідальністю цього репозиторію; Hellduck індексує зв’язки й не завантажує та не виконує код учасників. Практичні сценарії взаємодії, типи адаптерів і межі сумісності: [Integration Playbook](https://github.com/bboroski/Hellduck/blob/main/docs/INTEGRATION_PLAYBOOK.md).
+
+
+## GRAND-SLAM engineering protocol
+
+Four-vector engineering acceptance standard (physical efficiency, human factors, technical quality and resilience), adapted to this repository: [docs/GRAND_SLAM.md](docs/GRAND_SLAM.md).

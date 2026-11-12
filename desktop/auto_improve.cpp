@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QFont>
+#include <QAbstractItemView>
 #include <QHBoxLayout>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -51,6 +53,8 @@ private:
     QLabel *status_ = nullptr;
     QLabel *host_ = nullptr;
     QTableWidget *matrixTable_ = nullptr;
+    QPushButton *refineButton_ = nullptr;
+    QPushButton *exportButton_ = nullptr;
     QJsonObject matrix_;
     int version_ = 0;
 
@@ -100,22 +104,18 @@ private:
 
         auto *actions = new QHBoxLayout();
         auto *scan = new QPushButton(QStringLiteral("Observe & generate matrix"));
-        auto *refine = new QPushButton(QStringLiteral("Create child iteration"));
-        auto *exportButton = new QPushButton(QStringLiteral("Export matrix JSON"));
+        refineButton_ = new QPushButton(QStringLiteral("Create child iteration"));
+        exportButton_ = new QPushButton(QStringLiteral("Export matrix JSON"));
         scan->setStyleSheet(QStringLiteral("background:#ffd600;color:#111;font-weight:700;"));
-        refine->setEnabled(false);
-        exportButton->setEnabled(false);
+        refineButton_->setEnabled(false);
+        exportButton_->setEnabled(false);
         connect(scan, &QPushButton::clicked, this, [this] { observe(); });
-        connect(refine, &QPushButton::clicked, this, [this] { refineMatrix(); });
-        connect(exportButton, &QPushButton::clicked, this, [this] { exportMatrix(); });
+        connect(refineButton_, &QPushButton::clicked, this, [this] { refineMatrix(); });
+        connect(exportButton_, &QPushButton::clicked, this, [this] { exportMatrix(); });
         actions->addWidget(scan);
-        actions->addWidget(refine);
-        actions->addWidget(exportButton);
+        actions->addWidget(refineButton_);
+        actions->addWidget(exportButton_);
         layout->addLayout(actions);
-        connect(this, &AutoImproveStudio::matrixReady, this, [refine, exportButton] {
-            refine->setEnabled(true);
-            exportButton->setEnabled(true);
-        });
         status_ = new QLabel(QStringLiteral(
             "Idle. Observation is read-only; no code, OS settings, drivers or packages will be changed."));
         status_->setWordWrap(true);
@@ -232,7 +232,8 @@ private:
         renderMatrix();
         status_->setText(QStringLiteral("Matrix %1 generated. Observation is complete; proposal and apply stages remain UNKNOWN (0) pending project-specific evidence and approval.")
             .arg(matrixId));
-        emit matrixReady();
+        refineButton_->setEnabled(true);
+        exportButton_->setEnabled(true);
     }
 
     void refineMatrix()

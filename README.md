@@ -11,6 +11,7 @@
 - [Поточні можливості](#поточні-можливості)
 - [Швидкий старт і перевірка](#швидкий-старт-і-перевірка)
 - [Архітектура, межі та достовірність](#архітектура-межі-та-достовірність)
+- [Desktop Workbench](#desktop-workbench)
 - [Інтерфейс і візуальні матеріали](#інтерфейс-і-візуальні-матеріали)
 - [Інженерна якість](#інженерна-якість)
 - [Карта документації](#карта-документації)
@@ -43,9 +44,14 @@ NUNLauncher — host-side шар допуску образу перед запу
 
 Secure Boot, підпис видавця, ротація ключів та TPM attestation не реалізовані. Поточний manifest явно позначає образ як unsigned; SHA-256 підтверджує збіг із manifest, а не особу видавця.
 
-## Інтерфейс і візуальні матеріали
+## Desktop Workbench
 
-NUNLauncher — host-side C11 validator для boot metadata, а не графічний застосунок. Скриншотів GUI немає; зображення нижче показує лише спільний стиль документації Duck Black / Yellow.
+**NUN Workbench** — необов’язковий десктопний застосунок на Qt 6 Widgets для розробки NUN у host-середовищі. Він об’єднує вибір робочого каталогу, наявні команди збирання NUN, host-тести, read-only перевірку ISO та маніфесту через валідатор NUNLauncher і запуск поточного сценарію QEMU bring-up.
+
+Застосунок працює на хостовій ОС і не є графічною оболонкою ядра NUN. Його наявність не означає, що в NUN уже реалізовано userspace, VFS, мережу, графічні драйвери або desktop environment. Qt 6 — необов’язкова ціль; наявні C11-бібліотека контрактів і тести залишаються незалежними від Qt.
+
+- [Інструкція NUN Workbench](docs/DESKTOP_WORKBENCH.md)
+- [План desktop-застосунків](docs/DESKTOP_APPLICATION_ROADMAP.md)
 
 ## Перевірка образу на host
 
@@ -80,6 +86,8 @@ Validator не завантажує й не виконує код. Переві�
 - [Boot-image supervisor та модель довіри](docs/BOOT_SUPERVISOR.md)
 - [E2K Linux userspace admission](docs/E2K_RUNTIME.md)
 - [Інтеграція екосистеми](docs/ECOSYSTEM_INTEGRATION.md)
+- [NUN Workbench](docs/DESKTOP_WORKBENCH.md)
+- [Desktop application roadmap](docs/DESKTOP_APPLICATION_ROADMAP.md)
 - [Інженерне врядування](docs/ENGINEERING_GOVERNANCE.md)
 
 ## NUN Mesh та пов'язані репозиторії

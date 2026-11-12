@@ -7,6 +7,7 @@
 
 
 ## Contents
+- [Desktop Workbench](#desktop-workbench)
 
 - [Current capabilities](#current-capabilities)
 - [Quick start and verification](#quick-start-and-verification)
@@ -43,9 +44,14 @@ NUNLauncher is a host-side image-admission layer: it verifies a built NUN ISO be
 
 Secure Boot, publisher signatures, key rotation and TPM attestation are not implemented. The current manifest explicitly marks the image unsigned; SHA-256 confirms a match with the manifest, not publisher identity.
 
-## Interface and visual materials
+## Desktop Workbench
 
-NUNLauncher is a host-side C11 validator for boot metadata, not a graphical application. No GUI screenshots are available; the image below shows only the shared Duck Black / Yellow documentation style.
+**NUN Workbench** is an optional Qt 6 Widgets desktop application for host-side NUN development. It brings together workspace selection, existing NUN build commands, host tests, read-only ISO and manifest verification through the NUNLauncher validator, and the current QEMU bring-up script.
+
+The application runs on the host OS and is not a GUI inside the NUN kernel. It does not imply that NUN already implements userspace, VFS, networking, graphics drivers, or a desktop environment. Qt 6 is an optional target; the existing C11 contract library and tests remain independent of Qt.
+
+- [NUN Workbench guide](docs/DESKTOP_WORKBENCH.md)
+- [Desktop application roadmap](docs/DESKTOP_APPLICATION_ROADMAP.md)
 
 ## Host-side image validation
 
@@ -81,6 +87,9 @@ The separate `verify-e2k` command checks an E2K Linux userspace ELF (`EM_MCST_EL
 - [E2K Linux userspace admission](docs/E2K_RUNTIME.md)
 - [Ecosystem integration](docs/ECOSYSTEM_INTEGRATION.md)
 - [Engineering governance](docs/ENGINEERING_GOVERNANCE.md)
+
+- [NUN Workbench](docs/DESKTOP_WORKBENCH.md)
+- [Desktop application roadmap](docs/DESKTOP_APPLICATION_ROADMAP.md)
 
 ## NUN Mesh and related repositories
 [SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN) · [NUNLauncher](https://github.com/bboroski/NUNLauncher)

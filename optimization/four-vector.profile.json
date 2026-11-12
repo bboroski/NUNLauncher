@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "repository": "bboroski/NUNLauncher",
+  "optimization_method": "four-vector",
+  "status": "baseline_pending",
+  "implementation_status": "profile_added",
+  "product_role": "boot-image-verifier",
+  "detected_stack": "python-c",
+  "vectors": {
+    "physics": {
+      "focus": "latency-throughput-resource-cost",
+      "metrics": [
+        "image_read_latency",
+        "hash_latency",
+        "verification_latency",
+        "peak_buffer_memory"
+      ],
+      "baseline": "not_measured"
+    },
+    "biology": {
+      "focus": "bounded-resource-lifecycle-and-feedback",
+      "controls": [
+        "manifest_size_limit",
+        "image_size_limit",
+        "fail_closed"
+      ],
+      "baseline": "not_measured"
+    },
+    "technology": {
+      "focus": "modularity-contracts-security",
+      "boundaries": [
+        "binary_parser",
+        "manifest",
+        "media",
+        "verification",
+        "boot_contract"
+      ]
+    },
+    "sambo": {
+      "focus": "reuse-leverage-and-safe-deferral",
+      "strategies": [
+        "streaming_io",
+        "standard_hash_primitives"
+      ]
+    }
+  },
+  "verification": {
+    "commands": [
+      "python -m pytest",
+      "cmake --build build"
+    ],
+    "results": "not_run_in_this_change"
+  },
+  "guardrails": [
+    "Never trade verification strength for speed"
+  ],
+  "acceptance": [
+    "baseline recorded on a named platform",
+    "no unbounded queues caches retries or loops",
+    "errors and partial results remain explicit",
+    "public contracts remain compatible or are versioned",
+    "performance claims have before-after evidence"
+  ],
+  "updated_at": "2026-11-11"
+}

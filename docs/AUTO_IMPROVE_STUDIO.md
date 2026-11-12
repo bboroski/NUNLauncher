@@ -21,7 +21,7 @@ Qt 6.4 Widgets and a C++17 compiler are required. If Qt is unavailable, the exis
 4. Export the versioned JSON evidence record.
 5. Optionally create a child iteration. The parent matrix ID is retained and prior evidence is not rewritten.
 
-The observer reads host OS/CPU metadata, counts files (with a 100,000-file cap), and invokes only `git status --porcelain=v1 --untracked-files=no`. It does not execute repository build scripts, tests, generated code, package managers, or arbitrary shell commands.
+The observer reads host OS/CPU and root-storage metadata, counts files (with a 100,000-file cap), invokes only `git status --porcelain=v1 --untracked-files=no`, and inspects `ecosystem/auto-improvement.json` when present (maximum 1 MiB). A valid adapter supplies that repository's own domain, role and capabilities to the matrix; a missing adapter remains UNKNOWN and an invalid adapter blocks promotion. Its bytes are represented by a SHA-256 evidence digest. It does not execute repository build scripts, tests, generated code, package managers, or arbitrary shell commands.
 
 ## Ternary semantics
 

@@ -46,6 +46,10 @@ if(BUILD_TESTING)
     set_tests_properties(nunlauncher_desktop_version PROPERTIES
         ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
     )
+    add_test(NAME nunlauncher_auto_improve_version COMMAND NUNLauncher.AutoImprove --version)
+    set_tests_properties(nunlauncher_auto_improve_version PROPERTIES
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    )
 endif()
 
 install(TARGETS NUNLauncher.Desktop NUNLauncher.AutoImprove

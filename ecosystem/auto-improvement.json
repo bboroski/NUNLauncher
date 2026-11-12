@@ -1,0 +1,52 @@
+{
+  "schema": "nun.auto-improvement.repository.v1",
+  "repository": "bboroski/NUNLauncher",
+  "domain": "desktop-control-plane",
+  "role": "native-desktop-workbench",
+  "capabilities": [
+    "repository-discovery",
+    "matrix-review",
+    "improvement-orchestration",
+    "rollback-planning"
+  ],
+  "policy": {
+    "mode": "proposal-first",
+    "automatic_actions": [
+      "inventory",
+      "read",
+      "analyze",
+      "generate-matrix",
+      "validate-matrix",
+      "rank-proposals"
+    ],
+    "approval_required": [
+      "write-files",
+      "change-build-config",
+      "install-software",
+      "change-boot-config",
+      "flash-firmware",
+      "merge-pull-request"
+    ],
+    "guardrails": "native host application; explicit approval for writes, installs, boot changes, and merges"
+  },
+  "matrix": {
+    "model": "ternary-three-stage",
+    "stages": [
+      "S1-observe-and-baseline",
+      "S2-propose-and-validate",
+      "S3-approve-and-apply"
+    ],
+    "states": [
+      "-1=regression-or-block",
+      "0=unknown-or-no-change",
+      "1=verified-improvement"
+    ],
+    "evidence_required": true,
+    "rollback_plan_required": true
+  },
+  "protocol": {
+    "version": "1.0.0",
+    "transport": "local-files-and-versioned-json",
+    "no_remote_code_execution": true
+  }
+}

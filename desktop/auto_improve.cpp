@@ -20,6 +20,7 @@
 #include <QPushButton>
 #include <QSysInfo>
 #include <QTableWidget>
+#include <QTextStream>
 #include <QHeaderView>
 #include <QVBoxLayout>
 #include <QUuid>
@@ -297,6 +298,10 @@ signals:
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    if (app.arguments().contains(QStringLiteral("--version"))) {
+        QTextStream(stdout) << "NUN AutoImprove Studio 0.1.0" << Qt::endl;
+        return 0;
+    }
     AutoImproveStudio window;
     window.show();
     return app.exec();

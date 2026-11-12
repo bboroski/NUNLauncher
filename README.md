@@ -29,10 +29,6 @@ NUNLauncher — host-side шар допуску образу перед запу
 
 Secure Boot, підпис видавця, ротація ключів та TPM attestation не реалізовані. Поточний manifest явно позначає образ як unsigned; SHA-256 підтверджує збіг із manifest, а не особу видавця.
 
-## Інтерфейс і візуальні матеріали
-
-NUNLauncher — host-side C11 validator для boot metadata, а не графічний застосунок. Скриншотів GUI немає; зображення нижче показує лише спільний стиль документації Duck Black / Yellow.
-
 ## Перевірка образу на host
 
 `tools/validate_boot_image.py` перевіряє JSON-manifest, SHA-256, безпечний шлях до образу, межі пам’яті та вирівнювання entry point. Це перевірка метаданих, а не bootloader і не підтвердження підтримки архітектури.

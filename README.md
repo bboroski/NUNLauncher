@@ -99,3 +99,8 @@ Validator не завантажує й не виконує код. Переві�
 ## Федерація Hellduck
 
 Цей репозиторій входить до федерації [Hellduck](https://github.com/bboroski/Hellduck) — спільного каталогу проєктів, контрактних зв’язків і станів інтеграції. Вихідний код, API, тести та цикл випуску залишаються відповідальністю цього репозиторію; Hellduck індексує зв’язки й не завантажує та не виконує код учасників. Практичні сценарії взаємодії, типи адаптерів і межі сумісності: [Integration Playbook](https://github.com/bboroski/Hellduck/blob/main/docs/INTEGRATION_PLAYBOOK.md).
+
+
+## UTYA-ZHNETS machine design
+
+This project includes an original industrial machine-design profile and machine-readable tokens. The profile extends the existing brand and does not claim unimplemented runtime features: [design profile](design/UTYA_ZHNETS.md) · [tokens](design/utya-zhnetz.tokens.json).

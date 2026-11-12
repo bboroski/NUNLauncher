@@ -19,6 +19,7 @@
 #include <QProcess>
 #include <QPushButton>
 #include <QSysInfo>
+#include <QStorageInfo>
 #include <QTableWidget>
 #include <QTextStream>
 #include <QHeaderView>
@@ -163,6 +164,42 @@ private:
             if (fileCount >= 100000) break;
         }
         evidenceLines << QStringLiteral("file_count_lower_bound=%1").arg(fileCount);
+        const QStorageInfo storage = QStorageInfo::root();
+        evidenceLines << QStringLiteral("host_storage_available=%1").arg(storage.bytesAvailable());
+        evidenceLines << QStringLiteral("host_storage_total=%1").arg(storage.bytesTotal());
+
+        bool adapterFound = false;
+        bool adapterValid = false;
+        QString adapterStatus = QStringLiteral("adapter=missing; repository-specific capabilities are unknown");
+        QString adapterRepository;
+        QString adapterDigest;
+        QFile adapterFile(QDir(path).filePath(QStringLiteral("ecosystem/auto-improvement.json")));
+        if (adapterFile.open(QIODevice::ReadOnly)) {
+            adapterFound = true;
+            const QByteArray adapterBytes = adapterFile.readAll();
+            adapterDigest = hashText(adapterBytes);
+            QJsonParseError parseError;
+            const QJsonDocument adapterDocument = QJsonDocument::fromJson(adapterBytes, &parseError);
+            if (parseError.error == QJsonParseError::NoError && adapterDocument.isObject()) {
+                const QJsonObject adapter = adapterDocument.object();
+                adapterRepository = adapter.value(QStringLiteral("repository")).toString();
+                const bool schemaOk = adapter.value(QStringLiteral("schema")).toString()
+                    == QStringLiteral("nun.auto-improvement.repository.v1");
+                const bool capabilitiesOk = adapter.value(QStringLiteral("capabilities")).isArray()
+                    && !adapter.value(QStringLiteral("capabilities")).toArray().isEmpty();
+                adapterValid = schemaOk && !adapterRepository.isEmpty() && capabilitiesOk;
+                adapterStatus = adapterValid
+                    ? QStringLiteral("adapter=valid; domain=%1; role=%2; capabilities=%3")
+                        .arg(adapter.value(QStringLiteral("domain")).toString(),
+                             adapter.value(QStringLiteral("role")).toString())
+                        .arg(adapter.value(QStringLiteral("capabilities")).toArray().size())
+                    : QStringLiteral("adapter=invalid; schema, repository or capabilities field is missing/invalid");
+            } else {
+                adapterStatus = QStringLiteral("adapter=invalid JSON; %1").arg(parseError.errorString());
+            }
+        }
+        evidenceLines << adapterStatus;
+        if (!adapterDigest.isEmpty()) evidenceLines << QStringLiteral("adapter_sha256=%1").arg(adapterDigest);
 
         QProcess git;
         git.setWorkingDirectory(path);
@@ -183,7 +220,7 @@ private:
         const QJsonArray evidence{QJsonObject{
             {QStringLiteral("id"), evidenceId},
             {QStringLiteral("kind"), QStringLiteral("manual_review")},
-            {QStringLiteral("source"), QStringLiteral("local read-only inventory: filesystem + git status")},
+            {QStringLiteral("source"), QStringLiteral("local read-only inventory: host metadata + filesystem + git status + repository adapter")},
             {QStringLiteral("sha256"), hashText(evidenceBytes)}}};
 
         QJsonArray cells;
@@ -193,8 +230,15 @@ private:
         cells.append(makeCell(QStringLiteral("observe"), QStringLiteral("working_tree"), 0,
             gitStatus, {evidenceId}));
         cells.append(makeCell(QStringLiteral("observe"), QStringLiteral("host_environment"), 1,
-            QStringLiteral("Host OS and CPU architecture were read from Qt system metadata."),
+            QStringLiteral("Host OS, CPU architecture and root storage capacity were read from Qt system metadata."),
             {evidenceId}));
+        cells.append(makeCell(QStringLiteral("observe"), QStringLiteral("repository_adapter"),
+            adapterValid ? 1 : (adapterFound ? -1 : 0), adapterStatus, {evidenceId}, adapterFound && !adapterValid));
+        cells.append(makeCell(QStringLiteral("propose_validate"), QStringLiteral("adapter_capability_alignment"), 0,
+            adapterValid
+                ? QStringLiteral("Repository-specific role and declared capabilities are available for a future adapter-specific planner.")
+                : QStringLiteral("No valid repository-specific adapter is available; domain-specific optimization remains unknown."),
+            {evidenceId}, !adapterValid));
         cells.append(makeCell(QStringLiteral("propose_validate"), QStringLiteral("performance_candidates"), 0,
             QStringLiteral("No performance claim is made until project-specific benchmarks are declared and run."),
             {evidenceId}));
@@ -218,7 +262,7 @@ private:
         matrix_ = QJsonObject{
             {QStringLiteral("schema"), QStringLiteral("nun.auto-improvement.matrix.v1")},
             {QStringLiteral("matrix_id"), matrixId},
-            {QStringLiteral("repository"), QStringLiteral("local/%1").arg(QFileInfo(path).fileName())},
+            {QStringLiteral("repository"), adapterValid ? adapterRepository : QStringLiteral("local/%1").arg(QFileInfo(path).fileName())},
             {QStringLiteral("version"), version_},
             {QStringLiteral("parent_matrix_id"), QJsonValue::Null},
             {QStringLiteral("created_at"), QDateTime::currentDateTimeUtc().toString(Qt::ISODate)},

@@ -4,8 +4,12 @@
   "domain": "desktop-control-plane",
   "role": "native-desktop-workbench",
   "capabilities": [
+    "native-desktop-workbench",
     "repository-discovery",
-    "matrix-review",
+    "read-only-host-observation",
+    "three-stage-ternary-matrix-review",
+    "matrix-evidence-export",
+    "immutable-child-matrix-iterations",
     "improvement-orchestration",
     "rollback-planning"
   ],
@@ -13,11 +17,13 @@
     "mode": "proposal-first",
     "automatic_actions": [
       "inventory",
-      "read",
+      "read-host-metadata",
+      "read-git-status",
       "analyze",
       "generate-matrix",
       "validate-matrix",
-      "rank-proposals"
+      "export-evidence",
+      "create-child-matrix"
     ],
     "approval_required": [
       "write-files",
@@ -27,7 +33,7 @@
       "flash-firmware",
       "merge-pull-request"
     ],
-    "guardrails": "native host application; explicit approval for writes, installs, boot changes, and merges"
+    "guardrails": "native host application only; read-only observation by default; explicit approval for all writes, installs, boot changes, firmware operations and merges; never link desktop dependencies into the NUN freestanding C kernel"
   },
   "matrix": {
     "model": "ternary-three-stage",

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/bboroski/NUNLauncher/blob/main/schemas/ternary-improvement-matrix.schema.json",
+  "title": "NUN three-stage ternary improvement matrix",
+  "type": "object",
+  "required": [
+    "schema",
+    "matrix_id",
+    "repository",
+    "version",
+    "stages",
+    "cells",
+    "evidence",
+    "rollback"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nun.auto-improvement.matrix.v1"
+    },
+    "matrix_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "parent_matrix_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "stages": {
+      "const": [
+        "observe",
+        "propose_validate",
+        "approve_apply"
+      ]
+    },
+    "cells": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "stage",
+          "subsystem",
+          "result",
+          "claim",
+          "evidence_refs"
+        ],
+        "properties": {
+          "stage": {
+            "enum": [
+              "observe",
+              "propose_validate",
+              "approve_apply"
+            ]
+          },
+          "subsystem": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result": {
+            "enum": [
+              -1,
+              0,
+              1
+            ]
+          },
+          "claim": {
+            "type": "string"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "blocking": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "source",
+          "sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "build",
+              "test",
+              "static_analysis",
+              "security",
+              "performance",
+              "hardware",
+              "manual_review"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          }
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "required": [
+        "required",
+        "plan"
+      ],
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "approval": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "approved_by": {
+          "type": "string"
+        },
+        "approved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "scope": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

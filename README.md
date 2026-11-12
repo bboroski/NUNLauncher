@@ -3,8 +3,22 @@
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>
 <p align="center"><img src="https://img.shields.io/badge/STATUS-PRE--HANDOFF%20IMAGE%20ADMISSION%20%C2%B7%20UNSIGNED-FFD600?style=for-the-badge&labelColor=111111" alt="Pre-handoff image admission · unsigned"></p>
 <p align="center"><a href="README.md">🇺🇦 Українська</a> · <a href="README.en.md">🇬🇧 English</a> · <a href="README.ru.md">🇷🇺 Русский</a></p>
-<sub>Оновлено: 2026-11-12</sub>
+<sub>Оновлено: 2026-11-11</sub>
 
+
+## Навігація
+
+- [Поточні можливості](#поточні-можливості)
+- [Швидкий старт і перевірка](#швидкий-старт-і-перевірка)
+- [Архітектура, межі та достовірність](#архітектура-межі-та-достовірність)
+- [Інтерфейс і візуальні матеріали](#інтерфейс-і-візуальні-матеріали)
+- [Інженерна якість](#інженерна-якість)
+- [Карта документації](#карта-документації)
+- [NUN Mesh та пов'язані репозиторії](#nun-mesh-та-повязані-репозиторії)
+- [Дизайн і документація](#дизайн-і-документація)
+- [Ліцензія](#ліцензія)
+
+> **NUNLauncher** — NUNLauncher визначає вузьку межу між firmware/bootloader та ядром NUN і перевіряє kernel-image metadata перед майбутнім handoff.
 
 ## Поточні можливості
 - Host-side validator 48-byte kernel-image header.
@@ -29,6 +43,10 @@ NUNLauncher — host-side шар допуску образу перед запу
 
 Secure Boot, підпис видавця, ротація ключів та TPM attestation не реалізовані. Поточний manifest явно позначає образ як unsigned; SHA-256 підтверджує збіг із manifest, а не особу видавця.
 
+## Інтерфейс і візуальні матеріали
+
+NUNLauncher — host-side C11 validator для boot metadata, а не графічний застосунок. Скриншотів GUI немає; зображення нижче показує лише спільний стиль документації Duck Black / Yellow.
+
 ## Перевірка образу на host
 
 `tools/validate_boot_image.py` перевіряє JSON-manifest, SHA-256, безпечний шлях до образу, межі пам’яті та вирівнювання entry point. Це перевірка метаданих, а не bootloader і не підтвердження підтримки архітектури.
@@ -50,6 +68,12 @@ Validator не завантажує й не виконує код. Переві�
 
 <p align="center"><img src="assets/duck-ui/duck-ui-preview.svg" alt="Спільний дизайн Duck Black Yellow; не інтерфейс NUNLauncher" width="960"></p>
 
+## Інженерна якість
+- Перевіряйте збірку й тести саме для цільової платформи; host CI не замінює hardware qualification.
+- Статуси **implemented**, **partial**, **planned** мають підтверджуватися кодом, тестами та документацією.
+- Не оголошуйте функцію production-ready лише на підставі макета, специфікації чи відкритого Pull Request.
+- Зовнішні інтеграції мають бути явними, версіонованими, ізольованими й перевірюваними.
+
 ## Карта документації
 
 - [Контракт образу ядра](docs/BOOT_IMAGE_CONTRACT.md)
@@ -58,24 +82,24 @@ Validator не завантажує й не виконує код. Переві�
 - [Інтеграція екосистеми](docs/ECOSYSTEM_INTEGRATION.md)
 - [Інженерне врядування](docs/ENGINEERING_GOVERNANCE.md)
 
+## NUN Mesh та пов'язані репозиторії
+[SAMBU](https://github.com/bboroski/SAMBU) · [ToolNG](https://github.com/bboroski/ToolNG) · [ReaperCripple](https://github.com/bboroski/ReaperCripple) · [Kloz](https://github.com/bboroski/Kloz) · [CO](https://github.com/bboroski/CO) · [SaintSI](https://github.com/bboroski/SaintSI) · [Klipot](https://github.com/bboroski/Klipot) · [NUN](https://github.com/bboroski/NUN) · [NUNLauncher](https://github.com/bboroski/NUNLauncher)
+
+Репозиторії зберігають власні назви, код, API, цикли випуску та межі відповідальності. Інтеграція означає узгоджені контракти, а не автоматичне злиття незалежних runtime.
+
+## Дизайн і документація
+Базовий інтерфейсний напрям екосистеми — **Duck Black / Yellow**: чорні поверхні, жовтий акцент для дій і станів, читабельна типографіка, доступний контраст, клавіатурна навігація та підтримка reduced motion. Деталі дивіться в [design/DUCK_UI_SYSTEM.md](design/DUCK_UI_SYSTEM.md), якщо файл присутній у цьому репозиторії.
+
 ## Ліцензія
 Ліцензію не оголошено; файл LICENSE відсутній.
 
 ---
+**Створено з любов'ю до інженерії, системності та людей.**
 
-## Статус інтеграцій
+## Федерація Hellduck
 
-- Репозиторій зберігає власні API, збірку, тести та цикл випуску; міжпроєктна взаємодія відбувається через явні версіоновані контракти.
-- STaas (SaaS integration control plane) і MoonTreach (CI/test acceleration) розвиваються окремими Pull Requests. Їх не слід вважати можливостями `main` або production-ready до злиття та проходження обов'язкових перевірок.
-- Правила федерації та інтеграції: [Hellduck Integration Playbook](https://github.com/bboroski/Hellduck/blob/main/docs/INTEGRATION_PLAYBOOK.md).
+Цей репозиторій входить до федерації [Hellduck](https://github.com/bboroski/Hellduck) — спільного каталогу проєктів, контрактних зв’язків і станів інтеграції. Вихідний код, API, тести та цикл випуску залишаються відповідальністю цього репозиторію; Hellduck індексує зв’язки й не завантажує та не виконує код учасників. Практичні сценарії взаємодії, типи адаптерів і межі сумісності: [Integration Playbook](https://github.com/bboroski/Hellduck/blob/main/docs/INTEGRATION_PLAYBOOK.md).
 
-## Інженерний стандарт
-Індекс аудиту, тестових воріт, безпеки, супроводу та критеріїв інтеграції: [Engineering Improvement Index](docs/ENGINEERING_IMPROVEMENT_INDEX.md).
+## Engineering improvement index
 
-## Інтеграційні межі
-Зберігайте незалежні API, runtime та цикли випуску; інтегруйте через версіоновані контракти. [Hellduck Integration Playbook](https://github.com/bboroski/Hellduck/blob/main/docs/INTEGRATION_PLAYBOOK.md).
-
----
-**「在天愿作比翼鸟，在地愿为连理枝。」**
-
-*«У небі — птахами-нерозлучниками, на землі — гілками одного дерева».*
+[Repository-specific engineering roadmap and verification boundaries](docs/ENGINEERING_IMPROVEMENT_INDEX.md).

@@ -21,3 +21,8 @@ if(BUILD_TESTING)
     target_link_libraries(NUNLauncher.DiagnosticsTests PRIVATE NUNLauncher.Contract)
     add_test(NAME nunlauncher_diagnostics COMMAND NUNLauncher.DiagnosticsTests)
 endif()
+
+option(NUNLAUNCHER_BUILD_DESKTOP "Build the optional NUN Workbench Qt desktop application" ON)
+if(NUNLAUNCHER_BUILD_DESKTOP)
+    add_subdirectory(desktop)
+endif()

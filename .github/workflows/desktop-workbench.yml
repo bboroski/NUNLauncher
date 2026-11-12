@@ -1,0 +1,36 @@
+name: NUNLauncher desktop workbench
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "CMakeLists.txt"
+      - "desktop/**"
+      - ".github/workflows/desktop-workbench.yml"
+  pull_request:
+    paths:
+      - "CMakeLists.txt"
+      - "desktop/**"
+      - ".github/workflows/desktop-workbench.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-qt6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Qt 6 build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ qt6-base-dev
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DNUNLAUNCHER_BUILD_DESKTOP=ON
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: ctest --test-dir build --output-on-failure

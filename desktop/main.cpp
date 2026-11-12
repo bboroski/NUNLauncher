@@ -1,5 +1,8 @@
 #include <QApplication>
 #include <QCoreApplication>
+#include <utility>
+#include <QStringList>
+#include <cstdio>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>

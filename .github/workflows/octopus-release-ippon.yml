@@ -28,7 +28,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Project-specific build and test gates
       - name: Configure host validator
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build host validator

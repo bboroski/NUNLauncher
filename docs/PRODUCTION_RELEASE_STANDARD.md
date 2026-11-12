@@ -1,8 +1,8 @@
 # Production Release Standard
 
-**Repository:** bboroski/NUNLauncher  
-**Default branch:** `main`  
-**Project profile:** C/C++ launcher/boot project with CMake and Makefile  
+**Repository:** bboroski/NUNLauncher
+**Default branch:** `main`
+**Project profile:** C/C++ launcher/boot project with CMake and Makefile
 **Existing workflow inventory:** 10 workflow file(s) were visible at the time this baseline was prepared.
 
 ## Purpose and scope

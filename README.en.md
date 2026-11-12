@@ -1,3 +1,5 @@
+
+> **Brand palette:** signal yellow `#FFD600`; deep black `#111111`.
 <p align="center"><img src="assets/duck-ui/duck-mark.svg" alt="NUNLauncher mark" width="92"></p>
 <h1 align="center">NUNLauncher</h1>
 <p align="center"><strong>Kernel Bootstrap Supervisor</strong></p>

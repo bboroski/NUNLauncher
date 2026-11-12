@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "standard_id": "PERSONA-ENG-STD",
+  "repository": "bboroski/NUNLauncher",
+  "project": {
+    "domain": "Kernel boot-image admission and pre-handoff validation",
+    "mission": "Validate kernel image metadata, bounds, manifests, hashes, and boot information before any future handoff.",
+    "maturity": "pre-handoff-validator-unsigned"
+  },
+  "architecture": {
+    "preserve_existing_boundaries": true,
+    "primary_technologies": [
+      "C11/CMake host-side validator",
+      "versioned boot-image header",
+      "JSON manifest and SHA-256 checks",
+      "BIOS/UEFI and QEMU verification path"
+    ],
+    "explicit_non_goals": [
+      "Validator does not execute image code",
+      "Validator does not replace firmware or bootloader",
+      "Image hash equality does not establish publisher identity",
+      "Secure Boot, publisher signing, key rotation, and TPM attestation are not implied"
+    ]
+  },
+  "safety_boundaries": [
+    "Keep validation host-side and non-executing.",
+    "Validate file path, size, architecture, entry offset, alignment, and memory map bounds before admission.",
+    "Do not represent unsigned artifacts as authenticated.",
+    "Any future handoff or hardware execution requires a separate threat model and qualification."
+  ],
+  "native_validation": {
+    "status": "defined",
+    "commands": [
+      "cmake -S . -B build",
+      "cmake --build build --config Release",
+      "ctest --test-dir build --output-on-failure",
+      "python one.py check",
+      "make test"
+    ],
+    "evidence_note": "Host validation and QEMU boot checks do not prove arbitrary physical-device compatibility."
+  },
+  "required_gates": [
+    "profile-validation",
+    "native-project-checks",
+    "architecture-and-compatibility-review",
+    "security-and-privacy-review",
+    "documentation-review",
+    "human-review",
+    "target-qualification-when-applicable"
+  ],
+  "merge_policy": {
+    "pull_request_required": true,
+    "direct_main_push_policy": "enforce-with-branch-rules",
+    "bypass_required_checks": false,
+    "release_requires_separate_qualification": true
+  },
+  "status_vocabulary": [
+    "PROPOSED",
+    "PLANNED",
+    "IMPLEMENTED",
+    "TESTED",
+    "VERIFIED",
+    "MERGED",
+    "RELEASED",
+    "BLOCKED"
+  ]
+}

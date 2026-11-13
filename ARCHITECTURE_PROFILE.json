@@ -1,0 +1,103 @@
+{
+  "schema_version": "bboroski.modular-monolith-profile.v1",
+  "project": "NUNLauncher",
+  "maturity": "host-tested-core",
+  "architecture": {
+    "mode": "host-tool",
+    "scope": "Host-side kernel-image admission and boot-contract validator with C ABI routines and Python verification utilities.",
+    "runtime_boundary": "Runs before the kernel handoff; does not replace firmware/bootloader and does not execute the image.",
+    "composition_rule": "Keep binary parsing, memory-map validation, diagnostics and policy gates separated behind fixed-size, versioned contracts."
+  },
+  "entrypoints": [
+    {
+      "path": "nunlauncher_boot/cli.py",
+      "kind": "python-cli"
+    },
+    {
+      "path": "src/boot_contract.c",
+      "kind": "portable-c-implementation"
+    }
+  ],
+  "components": [
+    {
+      "id": "image-header-validator",
+      "responsibility": "Validate fixed-size image headers, architecture fields and entry offsets.",
+      "status": "implemented",
+      "integration": "in-process"
+    },
+    {
+      "id": "memory-map-validator",
+      "responsibility": "Check bounded, non-overlapping memory ranges.",
+      "status": "implemented",
+      "integration": "in-process"
+    },
+    {
+      "id": "e2k-image-verifier",
+      "responsibility": "Host-side inspection and verification workflow for E2K-target image metadata.",
+      "status": "partial",
+      "integration": "isolated-target"
+    },
+    {
+      "id": "boot-diagnostics",
+      "responsibility": "Report validation states and reasons without transferring control.",
+      "status": "implemented",
+      "integration": "in-process"
+    }
+  ],
+  "dependencies": [
+    {
+      "project": "NUN",
+      "relationship": "image format and boot-info contract counterpart",
+      "runtime_dependency": false
+    },
+    {
+      "project": "Fragile-Baby",
+      "relationship": "E2K qualification evidence reference",
+      "runtime_dependency": false
+    }
+  ],
+  "preserved_boundaries": [
+    "Image validation, firmware handoff and kernel execution are separate phases.",
+    "Memory maps are caller-supplied and bounded.",
+    "Host-side success does not prove firmware compatibility or physical boot."
+  ],
+  "forbidden_composition": [
+    "No image execution or hidden handoff from validation routines.",
+    "No firmware replacement claim.",
+    "No unsigned image treated as authenticated."
+  ],
+  "build_profiles": [
+    {
+      "id": "host-c-and-python",
+      "status": "declared",
+      "commands": [
+        "cmake -S . -B build",
+        "cmake --build build --config Release",
+        "ctest --test-dir build --output-on-failure",
+        "python -m pytest"
+      ],
+      "evidence": [
+        "CMakeLists.txt",
+        "src/boot_contract.c",
+        "nunlauncher_boot/cli.py",
+        "tests/test_boot_contract.c"
+      ]
+    },
+    {
+      "id": "e2k-verification",
+      "status": "declared",
+      "commands": [
+        "python tools/validate_boot_image.py --help"
+      ],
+      "evidence": [
+        "tools/validate_boot_image.py",
+        "tests/test_e2k_verifier.py",
+        "cmake/toolchains/e2k-linux-lcc.cmake"
+      ]
+    }
+  ],
+  "gaps": [
+    "Run image validation against a corpus of malformed and valid fixtures on supported hosts.",
+    "Record actual boot-chain/firmware interoperability separately from header validation."
+  ]
+}

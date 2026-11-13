@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "ecosystem": "SAMBU",
+  "module_id": "nunlauncher-admission",
+  "repository": "bboroski/NUNLauncher",
+  "display_name": "NUNLauncher",
+  "role": "host-side-kernel-image-admission-and-pre-handoff-metadata-validation",
+  "runtime": [
+    "C11 host validator",
+    "Python host-side image manifest verification"
+  ],
+  "maturity": "pre-handoff-image-admission-unsigned",
+  "provides": [
+    "nun-image-admission-v1",
+    "nun-boot-metadata-validation-v1"
+  ],
+  "consumes": [
+    "nun-kernel-image-v1",
+    "nun-boot-info-v1"
+  ],
+  "dependencies": [
+    {
+      "module_id": "nun-kernel",
+      "relation": "optional-adapter",
+      "status": "adapter-ready",
+      "scope": "Validates NUN image metadata and memory handoff prerequisites; does not boot, authenticate, or execute the image."
+    }
+  ],
+  "boundaries": [
+    "Image validation is pre-handoff only and never executes image code.",
+    "SHA-256 comparison is not publisher authentication or a digital signature.",
+    "Secure Boot, TPM attestation, key rotation, and physical-device qualification are not claimed.",
+    "Unknown architecture or unsupported metadata fails closed."
+  ],
+  "verification": {
+    "host_tests": "Run CMake/CTest, make test, and Python unittest discovery.",
+    "target_validation": "QEMU validation is separate from physical firmware and hardware qualification.",
+    "evidence": [
+      "include/nunlauncher/boot_contract.h",
+      "src/boot_contract.c",
+      "tools/validate_boot_image.py",
+      "tests/"
+    ]
+  }
+}

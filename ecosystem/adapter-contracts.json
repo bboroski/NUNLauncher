@@ -1,0 +1,24 @@
+{
+  "schema_version": "jm.adapter-contracts.v1",
+  "repository": "bboroski/NUNLauncher",
+  "module_id": "nunlauncher-admission",
+  "contracts": [
+    {
+      "id": "nun-image-admission-v1",
+      "provider_module_id": "nun-kernel",
+      "provider": "bboroski/NUN",
+      "kind": "pre-handoff-image-admission",
+      "status": "implemented",
+      "contract_version": "1",
+      "local_paths": [
+        "include/nunlauncher/boot_contract.h",
+        "src/boot_contract.c",
+        "tools/validate_boot_image.py"
+      ],
+      "provider_paths": [
+        "ecosystem/manifest.json"
+      ],
+      "notes": "Host-side metadata validation; does not execute or authenticate images."
+    }
+  ]
+}

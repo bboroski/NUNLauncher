@@ -99,3 +99,8 @@ Validator не завантажує й не виконує код. Переві�
 ## Федерація Hellduck
 
 Цей репозиторій входить до федерації [Hellduck](https://github.com/bboroski/Hellduck) — спільного каталогу проєктів, контрактних зв’язків і станів інтеграції. Вихідний код, API, тести та цикл випуску залишаються відповідальністю цього репозиторію; Hellduck індексує зв’язки й не завантажує та не виконує код учасників. Практичні сценарії взаємодії, типи адаптерів і межі сумісності: [Integration Playbook](https://github.com/bboroski/Hellduck/blob/main/docs/INTEGRATION_PLAYBOOK.md).
+
+
+## OMEGA product upgrade
+
+Repository-specific architecture, graphical-design and verification contract: [docs/OMEGA_PRODUCT_UPGRADE.md](docs/OMEGA_PRODUCT_UPGRADE.md). Proposed work is distinguished from implemented and tested capabilities.

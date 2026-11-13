@@ -1,0 +1,15 @@
+name: NUNLauncher boot contract header smoke test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  boot-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile public boot admission contract
+        run: |
+          printf '%s\n' '#include "nunlauncher/boot_contract.h"' 'int main(void) { return 0; }' | cc -std=c11 -Wall -Wextra -Werror -fsyntax-only -I include -x c -
